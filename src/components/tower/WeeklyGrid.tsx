@@ -96,7 +96,7 @@ export function WeeklyGrid({
                       type="button"
                       onClick={() => onSelectUnit(unit.id)}
                       className={cn(
-                        "grid w-full grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5 border-l-2 px-3 py-2 text-left transition-colors",
+                        "grid w-[216px] grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5 border-l-2 px-3 py-2 text-left transition-colors",
                         isSelected
                           ? "border-l-primary bg-primary/10"
                           : "border-l-transparent hover:bg-surface-strong/60",
