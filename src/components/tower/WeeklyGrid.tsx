@@ -28,7 +28,7 @@ export function WeeklyGrid({
         <table className="w-full min-w-[1080px] border-collapse">
           <thead>
             <tr className="border-b border-border">
-              <th className="sticky left-0 z-20 w-[210px] bg-surface px-3 py-2 text-left text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              <th className="sticky left-0 z-20 w-[216px] min-w-[216px] bg-surface px-3 py-2 text-left text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 Unidad / Chofer
               </th>
               {dates.map((date, i) => (
@@ -91,7 +91,7 @@ export function WeeklyGrid({
                     isSelected ? "bg-primary/8" : "hover:bg-surface-strong/50",
                   )}
                 >
-                  <th scope="row" className="sticky left-0 z-10 bg-surface p-0 text-left">
+                  <th scope="row" className="sticky left-0 z-10 w-[216px] min-w-[216px] bg-surface p-0 text-left">
                     <button
                       type="button"
                       onClick={() => onSelectUnit(unit.id)}

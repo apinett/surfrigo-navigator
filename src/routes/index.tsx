@@ -20,7 +20,6 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 import { AR_BASES, CL_PORTS, STATUS_META, STATUS_ORDER } from "@/domain/catalog";
 import { DRIVERS, buildWeeklyPlan, driverById } from "@/domain/demo";
@@ -276,7 +275,9 @@ function FilterSelect({
       </span>
       <Select value={value} onValueChange={onChange}>
         <SelectTrigger className="h-8 w-full bg-surface-strong/60 text-xs">
-          <SelectValue />
+          <span className="truncate">
+            {value === ALL ? "Todos" : (options.find((o) => o.value === value)?.label ?? "Todos")}
+          </span>
         </SelectTrigger>
         <SelectContent>
           <SelectItem value={ALL}>Todos</SelectItem>
