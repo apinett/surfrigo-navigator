@@ -56,8 +56,8 @@ export function AvailabilityStrip({ availability }: { availability: Availability
                         </span>
                       </TooltipTrigger>
                       <TooltipContent>
-                        {value} unidad{value === 1 ? "" : "es"} disponible{value === 1 ? "" : "s"} en{" "}
-                        {locationName(row.locationId)} el {DAYS_SHORT[day]}
+                        {value} unidad{value === 1 ? "" : "es"} disponible{value === 1 ? "" : "s"}{" "}
+                        en {locationName(row.locationId)} el {DAYS_SHORT[day]}
                       </TooltipContent>
                     </Tooltip>
                   </td>

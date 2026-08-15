@@ -10,9 +10,17 @@ export const Route = createFileRoute("/comunicaciones")({
   head: () => ({
     meta: [
       { title: "Comunicaciones | Surfrigo Control Tower" },
-      { name: "description", content: "Borradores automáticos de aviso a cliente, embarcador y SENASA según eventos de viaje y frontera." },
+      {
+        name: "description",
+        content:
+          "Borradores automáticos de aviso a cliente, embarcador y SENASA según eventos de viaje y frontera.",
+      },
       { property: "og:title", content: "Comunicaciones | Surfrigo Control Tower" },
-      { property: "og:description", content: "Borradores de mensajes operativos generados por evento. Nada se envía automáticamente." },
+      {
+        property: "og:description",
+        content:
+          "Borradores de mensajes operativos generados por evento. Nada se envía automáticamente.",
+      },
     ],
   }),
   component: ComunicacionesPage,

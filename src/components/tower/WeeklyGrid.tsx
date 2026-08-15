@@ -91,7 +91,10 @@ export function WeeklyGrid({
                     isSelected ? "bg-primary/8" : "hover:bg-surface-strong/50",
                   )}
                 >
-                  <th scope="row" className="sticky left-0 z-10 w-[216px] min-w-[216px] bg-surface p-0 text-left">
+                  <th
+                    scope="row"
+                    className="sticky left-0 z-10 w-[216px] min-w-[216px] bg-surface p-0 text-left"
+                  >
                     <button
                       type="button"
                       onClick={() => onSelectUnit(unit.id)}

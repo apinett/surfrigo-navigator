@@ -70,7 +70,8 @@ export function UnitDrawer({
                   </span>
                 </p>
                 <p className="text-[11px] text-muted-foreground">
-                  {driver.homeCity}, {driver.province} · descanso disponible: {driver.restDaysAvailable} día(s)
+                  {driver.homeCity}, {driver.province} · descanso disponible:{" "}
+                  {driver.restDaysAvailable} día(s)
                 </p>
                 <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                   <Phone className="size-3" /> {driver.phone}
@@ -88,7 +89,13 @@ export function UnitDrawer({
                 <Metric label="ETA" value={fmtStamp(nextTrip?.etaAt)} />
                 <Metric
                   label="Riesgo"
-                  value={movements.some((m) => m.riskLevel === "alto") ? "Alto" : movements.some((m) => m.riskLevel === "medio") ? "Medio" : "Bajo"}
+                  value={
+                    movements.some((m) => m.riskLevel === "alto")
+                      ? "Alto"
+                      : movements.some((m) => m.riskLevel === "medio")
+                        ? "Medio"
+                        : "Bajo"
+                  }
                 />
               </div>
 
@@ -98,7 +105,8 @@ export function UnitDrawer({
                     Km del período
                   </p>
                   <p className="tabular shrink-0 text-xs">
-                    {unit.kmPeriod.toLocaleString("es-AR")} / {unit.kmTarget.toLocaleString("es-AR")} km
+                    {unit.kmPeriod.toLocaleString("es-AR")} /{" "}
+                    {unit.kmTarget.toLocaleString("es-AR")} km
                   </p>
                 </div>
                 <Progress value={kmPct} className="mt-2 h-1.5" />
@@ -119,7 +127,9 @@ export function UnitDrawer({
                   </p>
                   <ul className="mt-2 space-y-1">
                     {recommendation.reasons.map((r) => (
-                      <li key={r} className="text-[11px] leading-relaxed text-muted-foreground">• {r}</li>
+                      <li key={r} className="text-[11px] leading-relaxed text-muted-foreground">
+                        • {r}
+                      </li>
                     ))}
                   </ul>
                   <p className="mt-2 text-[10px] text-muted-foreground/80">
@@ -134,14 +144,19 @@ export function UnitDrawer({
                 </p>
                 <ol className="mt-2 space-y-1.5">
                   {movements.map((m) => (
-                    <li key={m.id} className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-2">
+                    <li
+                      key={m.id}
+                      className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-2"
+                    >
                       <span className="tabular mt-0.5 w-14 shrink-0 font-mono text-[10px] uppercase text-muted-foreground">
                         {DAYS[m.dayIndex]?.slice(0, 3)}
                         {m.span > 1 ? `+${m.span - 1}` : ""}
                       </span>
                       <span className="min-w-0">
                         <span className="flex min-w-0 items-center gap-1.5">
-                          <span className={`size-1.5 shrink-0 rounded-full ${STATUS_META[m.status].dot}`} />
+                          <span
+                            className={`size-1.5 shrink-0 rounded-full ${STATUS_META[m.status].dot}`}
+                          />
                           <span className="truncate text-[12px]">{m.title}</span>
                         </span>
                         {m.subtitle && (
@@ -171,7 +186,8 @@ export function UnitDrawer({
                   variant="outline"
                   onClick={() =>
                     toast("Asignar próximo movimiento (demo)", {
-                      description: "En la versión conectada, esto crea el viaje en la base de datos.",
+                      description:
+                        "En la versión conectada, esto crea el viaje en la base de datos.",
                     })
                   }
                 >

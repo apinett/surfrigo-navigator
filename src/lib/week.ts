@@ -23,8 +23,18 @@ export const fmtDay = (iso: string) => {
 export const fmtDayLong = (iso: string) => {
   const d = new Date(`${iso}T00:00:00Z`);
   const months = [
-    "enero", "febrero", "marzo", "abril", "mayo", "junio",
-    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
   ];
   return `${d.getUTCDate()} de ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 };

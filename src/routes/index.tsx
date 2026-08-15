@@ -15,12 +15,7 @@ import { UpcomingPanel } from "@/components/tower/UpcomingPanel";
 import { WeeklyGrid } from "@/components/tower/WeeklyGrid";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
 import { AR_BASES, CL_PORTS, STATUS_META, STATUS_ORDER } from "@/domain/catalog";
 import { DRIVERS, buildWeeklyPlan, driverById } from "@/domain/demo";
 import { SIMULATED_TODAY_INDEX, addDays, fmtDayLong } from "@/lib/week";
@@ -75,7 +70,8 @@ function TorreDeControl() {
           .toLowerCase();
         if (!haystack.includes(q)) return false;
       }
-      if (statusFilter !== ALL && !unitMovements.some((m) => m.status === statusFilter)) return false;
+      if (statusFilter !== ALL && !unitMovements.some((m) => m.status === statusFilter))
+        return false;
       if (baseFilter !== ALL && unit.currentLocationId !== baseFilter) return false;
       if (
         destinationFilter !== ALL &&

@@ -30,7 +30,8 @@ export function RecommendationPanel({
             </span>
           </TooltipTrigger>
           <TooltipContent className="max-w-56">
-            Sugerencia del sistema con motivos explicados. La decisión final siempre es del analista.
+            Sugerencia del sistema con motivos explicados. La decisión final siempre es del
+            analista.
           </TooltipContent>
         </Tooltip>
       </header>
@@ -68,13 +69,19 @@ export function RecommendationPanel({
               </div>
               <ul className="mt-2 space-y-1">
                 {rec.reasons.map((reason) => (
-                  <li key={reason} className="flex gap-1.5 text-[11px] leading-relaxed text-muted-foreground">
+                  <li
+                    key={reason}
+                    className="flex gap-1.5 text-[11px] leading-relaxed text-muted-foreground"
+                  >
                     <Check className="mt-0.5 size-3 shrink-0 text-st-disponible" />
                     {reason}
                   </li>
                 ))}
                 {rec.warnings?.map((warning) => (
-                  <li key={warning} className="flex gap-1.5 text-[11px] leading-relaxed text-st-demorada">
+                  <li
+                    key={warning}
+                    className="flex gap-1.5 text-[11px] leading-relaxed text-st-demorada"
+                  >
                     <TriangleAlert className="mt-0.5 size-3 shrink-0" />
                     {warning}
                   </li>
