@@ -7,9 +7,18 @@ import { fmtStamp } from "@/lib/week";
 import { cn } from "@/lib/utils";
 
 const AUDIENCE: Record<CommunicationDraft["audience"], { label: string; className: string }> = {
-  cliente: { label: "Cliente", className: "bg-st-transito/15 text-st-transito border-st-transito/35" },
-  embarcador: { label: "Embarcador EZE", className: "bg-st-descargando/15 text-st-descargando border-st-descargando/35" },
-  senasa: { label: "SENASA / Despachante", className: "bg-st-frontera/15 text-st-frontera border-st-frontera/35" },
+  cliente: {
+    label: "Cliente",
+    className: "bg-st-transito/15 text-st-transito border-st-transito/35",
+  },
+  embarcador: {
+    label: "Embarcador EZE",
+    className: "bg-st-descargando/15 text-st-descargando border-st-descargando/35",
+  },
+  senasa: {
+    label: "SENASA / Despachante",
+    className: "bg-st-frontera/15 text-st-frontera border-st-frontera/35",
+  },
   interno: { label: "Interno", className: "bg-muted text-muted-foreground border-border" },
 };
 
@@ -22,7 +31,9 @@ export function CommsCenter({
   expanded?: boolean;
   unitId?: string | undefined;
 }) {
-  const drafts = unitId ? plan.communications.filter((c) => c.unitId === unitId) : plan.communications;
+  const drafts = unitId
+    ? plan.communications.filter((c) => c.unitId === unitId)
+    : plan.communications;
 
   const copy = async (draft: CommunicationDraft) => {
     try {
@@ -79,7 +90,12 @@ export function CommsCenter({
                 {draft.body}
               </p>
               <div className="mt-2 flex gap-2">
-                <Button size="sm" variant="outline" className="h-7 text-[11px]" onClick={() => copy(draft)}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-7 text-[11px]"
+                  onClick={() => copy(draft)}
+                >
                   <Copy className="size-3" /> Copiar
                 </Button>
                 <Button

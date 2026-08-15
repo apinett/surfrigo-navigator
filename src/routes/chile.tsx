@@ -13,9 +13,17 @@ export const Route = createFileRoute("/chile")({
   head: () => ({
     meta: [
       { title: "Movimientos Chile | Surfrigo Control Tower" },
-      { name: "description", content: "Planilla día por día de unidades en viaje desde puertos chilenos y llegada prevista a CD Ezeiza." },
+      {
+        name: "description",
+        content:
+          "Planilla día por día de unidades en viaje desde puertos chilenos y llegada prevista a CD Ezeiza.",
+      },
       { property: "og:title", content: "Movimientos Chile | Surfrigo Control Tower" },
-      { property: "og:description", content: "Retornos de salmón desde Puerto Montt, Calbuco, Quellón, Chacabuco, Punta Arenas y Natales." },
+      {
+        property: "og:description",
+        content:
+          "Retornos de salmón desde Puerto Montt, Calbuco, Quellón, Chacabuco, Punta Arenas y Natales.",
+      },
     ],
   }),
   component: ChilePage,
@@ -60,13 +68,27 @@ function ChilePage() {
                   </td>
                   {dates.map((_, day) => {
                     const m = chileMovements.find(
-                      (mv) => mv.unitId === unit.id && day >= mv.dayIndex && day < mv.dayIndex + mv.span,
+                      (mv) =>
+                        mv.unitId === unit.id && day >= mv.dayIndex && day < mv.dayIndex + mv.span,
                     );
                     return (
                       <td key={day} className="px-1.5 py-2 text-center align-middle">
                         {m ? (
-                          <span className={cn("block truncate rounded px-1.5 py-1 text-[10px] font-medium", m.status === "riesgo" ? "bg-st-riesgo/20 text-st-riesgo" : m.status === "frontera" ? "bg-st-frontera/18 text-st-frontera" : "bg-st-retorno/18 text-st-retorno")}>
-                            {m.status === "frontera" ? "Frontera" : m.status === "riesgo" ? "Riesgo cruce" : "En viaje"}
+                          <span
+                            className={cn(
+                              "block truncate rounded px-1.5 py-1 text-[10px] font-medium",
+                              m.status === "riesgo"
+                                ? "bg-st-riesgo/20 text-st-riesgo"
+                                : m.status === "frontera"
+                                  ? "bg-st-frontera/18 text-st-frontera"
+                                  : "bg-st-retorno/18 text-st-retorno",
+                            )}
+                          >
+                            {m.status === "frontera"
+                              ? "Frontera"
+                              : m.status === "riesgo"
+                                ? "Riesgo cruce"
+                                : "En viaje"}
                           </span>
                         ) : (
                           <span className="text-muted-foreground/40">·</span>
@@ -87,21 +109,41 @@ function ChilePage() {
               {plan.borderEvents.map((ev) => {
                 const unit = plan.units.find((u) => u.id === ev.unitId);
                 return (
-                  <li key={ev.id} className="rounded-md border border-border bg-surface-strong/60 p-3">
+                  <li
+                    key={ev.id}
+                    className="rounded-md border border-border bg-surface-strong/60 p-3"
+                  >
                     <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
                       <p className="min-w-0 truncate text-sm font-medium">
-                        <span className="font-mono">{unit?.code}</span> · {locationName(ev.departedFromId)} → {borderById(ev.borderCrossingId)?.name}
+                        <span className="font-mono">{unit?.code}</span> ·{" "}
+                        {locationName(ev.departedFromId)} → {borderById(ev.borderCrossingId)?.name}
                       </p>
-                      <StatusChip status={ev.outcome === "riesgo" ? "riesgo" : ev.outcome === "cruzo" ? "transito" : "frontera"} />
+                      <StatusChip
+                        status={
+                          ev.outcome === "riesgo"
+                            ? "riesgo"
+                            : ev.outcome === "cruzo"
+                              ? "transito"
+                              : "frontera"
+                        }
+                      />
                     </div>
                     <p className="mt-1.5 text-xs text-muted-foreground">
-                      Salida {fmtStamp(ev.departedAt)} · ETA paso {fmtStamp(ev.etaBorderAt)} · probabilidad de cruce{" "}
-                      <span className={ev.crossProbability < 0.5 ? "text-st-riesgo" : "text-st-disponible"}>
+                      Salida {fmtStamp(ev.departedAt)} · ETA paso {fmtStamp(ev.etaBorderAt)} ·
+                      probabilidad de cruce{" "}
+                      <span
+                        className={
+                          ev.crossProbability < 0.5 ? "text-st-riesgo" : "text-st-disponible"
+                        }
+                      >
                         {Math.round(ev.crossProbability * 100)}%
                       </span>
-                      {ev.recalculatedEtaAt && ` · ETA recalculado ${fmtStamp(ev.recalculatedEtaAt)}`}
+                      {ev.recalculatedEtaAt &&
+                        ` · ETA recalculado ${fmtStamp(ev.recalculatedEtaAt)}`}
                     </p>
-                    {ev.comment && <p className="mt-1 text-xs text-muted-foreground/80">{ev.comment}</p>}
+                    {ev.comment && (
+                      <p className="mt-1 text-xs text-muted-foreground/80">{ev.comment}</p>
+                    )}
                   </li>
                 );
               })}
@@ -112,7 +154,10 @@ function ChilePage() {
             <h2 className="text-sm font-semibold">Puntos de carga en Chile</h2>
             <ul className="mt-3 space-y-1.5 text-sm">
               {CL_PORTS.map((port) => (
-                <li key={port.id} className="flex items-center justify-between gap-3 rounded-md border border-border/70 px-3 py-2">
+                <li
+                  key={port.id}
+                  className="flex items-center justify-between gap-3 rounded-md border border-border/70 px-3 py-2"
+                >
                   <span className="truncate">{port.name}</span>
                   <span className="tabular shrink-0 text-xs text-muted-foreground">
                     {port.kmFromEzeiza?.toLocaleString("es-AR")} km · {port.transitHours} h

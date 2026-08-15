@@ -68,7 +68,10 @@ export function riskFor(margin: number, config: DispatchConfig = DISPATCH_CONFIG
   return "alto";
 }
 
-export const RISK_META: Record<RiskLevel, { label: string; chip: string; text: string; dot: string }> = {
+export const RISK_META: Record<
+  RiskLevel,
+  { label: string; chip: string; text: string; dot: string }
+> = {
   bajo: {
     label: "Riesgo bajo",
     chip: "border-st-disponible/40 bg-st-disponible/12 text-st-disponible",
@@ -107,7 +110,10 @@ export interface PrioritizedRequest extends DepositRequest {
  * Prioridad derivada de la última salida viable (no de la distancia):
  * cuanto menos holgura, más arriba.
  */
-export function prioritizeRequests(requests: DepositRequest[], dateIso: string): PrioritizedRequest[] {
+export function prioritizeRequests(
+  requests: DepositRequest[],
+  dateIso: string,
+): PrioritizedRequest[] {
   return [...requests]
     .map((r) => {
       const latestDepartureAt = latestViableDeparture(r);
@@ -148,15 +154,43 @@ export function scoreAssignment(input: ScoreInput): AssignmentScoreBreakdown {
   // 1. Disponibilidad real
   const w1 = SCORE_WEIGHTS.disponibilidad;
   if (availability?.kind === "ahora" && !availability.needsWorkshop) {
-    factors.push({ key: "disponibilidad", label: "Disponibilidad real", points: w1, max: w1, kind: "positivo", detail: `Disponible ahora en ${locationById(availability.locationId)?.name ?? "CD Ezeiza"}.` });
+    factors.push({
+      key: "disponibilidad",
+      label: "Disponibilidad real",
+      points: w1,
+      max: w1,
+      kind: "positivo",
+      detail: `Disponible ahora en ${locationById(availability.locationId)?.name ?? "CD Ezeiza"}.`,
+    });
   } else if (availability?.kind === "ahora") {
-    factors.push({ key: "disponibilidad", label: "Disponibilidad real", points: Math.round(w1 * 0.55), max: w1, kind: "advertencia", detail: `Disponible, pero requiere revisión de taller (~${config.workshopPrepHours} h) antes de salir.` });
+    factors.push({
+      key: "disponibilidad",
+      label: "Disponibilidad real",
+      points: Math.round(w1 * 0.55),
+      max: w1,
+      kind: "advertencia",
+      detail: `Disponible, pero requiere revisión de taller (~${config.workshopPrepHours} h) antes de salir.`,
+    });
   } else if (availability?.readyAt) {
     const hoursAway = (toMs(availability.readyAt) - toMs(`${dateIso}T00:00:00`)) / 3_600_000;
     const pts = clamp(Math.round(w1 * (1 - hoursAway / 48)), 0, w1);
-    factors.push({ key: "disponibilidad", label: "Disponibilidad real", points: pts, max: w1, kind: "advertencia", detail: `Arribo previsto a Ezeiza ${availability.readyAt.slice(5, 16).replace("T", " ")}; queda disponible después de la hora sugerida.` });
+    factors.push({
+      key: "disponibilidad",
+      label: "Disponibilidad real",
+      points: pts,
+      max: w1,
+      kind: "advertencia",
+      detail: `Arribo previsto a Ezeiza ${availability.readyAt.slice(5, 16).replace("T", " ")}; queda disponible después de la hora sugerida.`,
+    });
   } else {
-    factors.push({ key: "disponibilidad", label: "Disponibilidad real", points: Math.round(w1 * 0.4), max: w1, kind: "supuesto", detail: "Sin arribo confirmado: se asume disponibilidad en la ventana del día." });
+    factors.push({
+      key: "disponibilidad",
+      label: "Disponibilidad real",
+      points: Math.round(w1 * 0.4),
+      max: w1,
+      kind: "supuesto",
+      detail: "Sin arribo confirmado: se asume disponibilidad en la ventana del día.",
+    });
   }
 
   // 2. Cumplimiento de ETA
@@ -167,7 +201,12 @@ export function scoreAssignment(input: ScoreInput): AssignmentScoreBreakdown {
     label: "Cumplimiento de ETA",
     points: etaPts,
     max: w2,
-    kind: margin >= config.lowRiskMarginMinutes ? "positivo" : margin >= 0 ? "advertencia" : "advertencia",
+    kind:
+      margin >= config.lowRiskMarginMinutes
+        ? "positivo"
+        : margin >= 0
+          ? "advertencia"
+          : "advertencia",
     detail:
       margin >= 0
         ? `ETA ${etaAt.slice(11, 16)} con ${Math.floor(margin / 60)} h ${margin % 60} m de holgura contra el objetivo.`
@@ -205,7 +244,9 @@ export function scoreAssignment(input: ScoreInput): AssignmentScoreBreakdown {
 
   // 5. Provincia / domicilio del chofer
   const w5 = SCORE_WEIGHTS.provincia;
-  const sameProvince = Boolean(driver && destination?.province && driver.province === destination.province);
+  const sameProvince = Boolean(
+    driver && destination?.province && driver.province === destination.province,
+  );
   factors.push({
     key: "provincia",
     label: "Provincia / domicilio",
@@ -228,7 +269,10 @@ export function scoreAssignment(input: ScoreInput): AssignmentScoreBreakdown {
     points: clamp(Math.round((rest / 3) * w6), 0, w6),
     max: w6,
     kind: rest === 0 ? "advertencia" : "positivo",
-    detail: rest === 0 ? "Sin días de descanso disponibles: revisar antes de confirmar." : `${rest} día(s) de descanso disponibles luego del viaje.`,
+    detail:
+      rest === 0
+        ? "Sin días de descanso disponibles: revisar antes de confirmar."
+        : `${rest} día(s) de descanso disponibles luego del viaje.`,
   });
 
   // 7. Continuidad del siguiente viaje
@@ -254,9 +298,10 @@ export function scoreAssignment(input: ScoreInput): AssignmentScoreBreakdown {
     points: clamp(Math.round(w8 * (slack <= 0 ? 1 : slack <= 180 ? 0.85 : 0.6)), 0, w8),
     max: w8,
     kind: slack <= 0 ? "advertencia" : "positivo",
-    detail: slack <= 0
-      ? "Salida crítica: ya pasó la última hora viable para cumplir el objetivo."
-      : `Quedan ${Math.floor(slack / 60)} h de holgura hasta la última salida viable.`,
+    detail:
+      slack <= 0
+        ? "Salida crítica: ya pasó la última hora viable para cumplir el objetivo."
+        : `Quedan ${Math.floor(slack / 60)} h de holgura hasta la última salida viable.`,
   });
 
   const total = clamp(Math.round(factors.reduce((s, f) => s + f.points, 0)), 0, 100);

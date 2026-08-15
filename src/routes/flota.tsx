@@ -77,7 +77,8 @@ function FlotaPage() {
                       <div className="flex items-center gap-2">
                         <Progress value={pct} className="h-1.5 w-24" />
                         <span className="tabular text-[11px] text-muted-foreground">
-                          {unit.kmPeriod.toLocaleString("es-AR")} / {unit.kmTarget.toLocaleString("es-AR")}
+                          {unit.kmPeriod.toLocaleString("es-AR")} /{" "}
+                          {unit.kmTarget.toLocaleString("es-AR")}
                         </span>
                       </div>
                     </td>

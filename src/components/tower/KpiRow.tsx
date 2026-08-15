@@ -16,12 +16,48 @@ interface Kpi {
 export function KpiRow({ plan }: { plan: WeeklyPlan }) {
   const k = plan.kpis;
   const kpis: Kpi[] = [
-    { label: "Unidades operativas", value: k.operativas, icon: Truck, accent: "text-foreground", help: "Total de unidades de la flota habilitadas para operar esta semana." },
-    { label: "Disponibles hoy", value: k.disponiblesHoy, icon: CheckCircle2, accent: "text-st-disponible", help: "Unidades liberadas hoy en CD Ezeiza o bases, listas para asignar." },
-    { label: "En viaje", value: k.enViaje, icon: Waypoints, accent: "text-st-transito", help: "Unidades en tránsito hoy, incluye retornos desde Chile." },
-    { label: "Descargando", value: k.descargando, icon: PackageOpen, accent: "text-st-descargando", help: "Unidades en destino descargando o esperando desprecintado SENASA." },
-    { label: "Retornos Chile", value: k.retornosChile, icon: Ship, accent: "text-st-retorno", help: "Unidades cargadas en puertos chilenos, en ruta o en trámite de frontera." },
-    { label: "Salidas en riesgo", value: k.salidasEnRiesgo, icon: AlertTriangle, accent: "text-st-riesgo", help: "Operaciones con ETA comprometido, demora o riesgo de no cruzar frontera." },
+    {
+      label: "Unidades operativas",
+      value: k.operativas,
+      icon: Truck,
+      accent: "text-foreground",
+      help: "Total de unidades de la flota habilitadas para operar esta semana.",
+    },
+    {
+      label: "Disponibles hoy",
+      value: k.disponiblesHoy,
+      icon: CheckCircle2,
+      accent: "text-st-disponible",
+      help: "Unidades liberadas hoy en CD Ezeiza o bases, listas para asignar.",
+    },
+    {
+      label: "En viaje",
+      value: k.enViaje,
+      icon: Waypoints,
+      accent: "text-st-transito",
+      help: "Unidades en tránsito hoy, incluye retornos desde Chile.",
+    },
+    {
+      label: "Descargando",
+      value: k.descargando,
+      icon: PackageOpen,
+      accent: "text-st-descargando",
+      help: "Unidades en destino descargando o esperando desprecintado SENASA.",
+    },
+    {
+      label: "Retornos Chile",
+      value: k.retornosChile,
+      icon: Ship,
+      accent: "text-st-retorno",
+      help: "Unidades cargadas en puertos chilenos, en ruta o en trámite de frontera.",
+    },
+    {
+      label: "Salidas en riesgo",
+      value: k.salidasEnRiesgo,
+      icon: AlertTriangle,
+      accent: "text-st-riesgo",
+      help: "Operaciones con ETA comprometido, demora o riesgo de no cruzar frontera.",
+    },
   ];
 
   return (

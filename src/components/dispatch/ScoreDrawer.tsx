@@ -52,7 +52,9 @@ export function ScoreDrawer({ view, onClose }: { view: ScoreView | null; onClose
               </SheetDescription>
               <Progress value={view.breakdown.total} className="mt-1 h-1.5" />
               <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px]">
-                <span className={`rounded border px-1.5 py-0.5 font-medium ${RISK_META[view.risk].chip}`}>
+                <span
+                  className={`rounded border px-1.5 py-0.5 font-medium ${RISK_META[view.risk].chip}`}
+                >
                   {RISK_META[view.risk].label}
                 </span>
                 <span className="text-muted-foreground">Salida {fmtStamp(view.departureAt)}</span>
@@ -83,7 +85,9 @@ export function ScoreDrawer({ view, onClose }: { view: ScoreView | null; onClose
                       </p>
                     </div>
                     <Progress value={(f.points / f.max) * 100} className="mt-1.5 h-1" />
-                    <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{f.detail}</p>
+                    <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
+                      {f.detail}
+                    </p>
                   </li>
                 );
               })}

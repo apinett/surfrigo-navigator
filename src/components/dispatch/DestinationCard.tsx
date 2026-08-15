@@ -73,7 +73,11 @@ export function DestinationCard({
       )}
 
       <dl className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
-        <Row icon={Clock} label="Ventana salida" value={`${request.suggestedDepartureTime}–${request.windowEndTime}`} />
+        <Row
+          icon={Clock}
+          label="Ventana salida"
+          value={`${request.suggestedDepartureTime}–${request.windowEndTime}`}
+        />
         <Row icon={Target} label="Objetivo descarga" value={fmtStamp(request.targetUnloadAt)} />
         <Row icon={Route} label="Distancia" value={`${request.km.toLocaleString("es-AR")} km`} />
         <Row
@@ -85,10 +89,16 @@ export function DestinationCard({
 
       {risk && (
         <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px]">
-          <span className={`rounded border px-1.5 py-0.5 font-medium ${risk.chip}`}>{risk.label}</span>
+          <span className={`rounded border px-1.5 py-0.5 font-medium ${risk.chip}`}>
+            {risk.label}
+          </span>
           <span className="text-muted-foreground">
             ETA {fmtStamp(assignments[0]?.etaAt)} · margen{" "}
-            <span className={(assignments[0]?.marginMinutes ?? 0) < 0 ? "text-st-riesgo" : "text-st-disponible"}>
+            <span
+              className={
+                (assignments[0]?.marginMinutes ?? 0) < 0 ? "text-st-riesgo" : "text-st-disponible"
+              }
+            >
               {fmtMargin(assignments[0]?.marginMinutes)}
             </span>
           </span>
@@ -124,10 +134,18 @@ export function DestinationCard({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-60">
-                    <DropdownMenuLabel className="text-[11px]">Mover unidad {unit?.code} a…</DropdownMenuLabel>
+                    <DropdownMenuLabel className="text-[11px]">
+                      Mover unidad {unit?.code} a…
+                    </DropdownMenuLabel>
                     {otherRequests.map((r) => (
-                      <DropdownMenuItem key={r.id} onSelect={() => onMove(a.id, r.id)} className="text-xs">
-                        <span className="tabular mr-1 font-mono text-[10px] text-muted-foreground">#{r.priority}</span>
+                      <DropdownMenuItem
+                        key={r.id}
+                        onSelect={() => onMove(a.id, r.id)}
+                        className="text-xs"
+                      >
+                        <span className="tabular mr-1 font-mono text-[10px] text-muted-foreground">
+                          #{r.priority}
+                        </span>
                         {locationName(r.destinationId)}
                       </DropdownMenuItem>
                     ))}
@@ -159,20 +177,14 @@ export function DestinationCard({
         ))}
       </div>
 
-      {request.notes && <p className="mt-2 text-[10px] italic text-muted-foreground">{request.notes}</p>}
+      {request.notes && (
+        <p className="mt-2 text-[10px] italic text-muted-foreground">{request.notes}</p>
+      )}
     </section>
   );
 }
 
-function Row({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: typeof Clock;
-  label: string;
-  value: string;
-}) {
+function Row({ icon: Icon, label, value }: { icon: typeof Clock; label: string; value: string }) {
   return (
     <div className="min-w-0">
       <dt className="flex items-center gap-1 truncate text-[10px] uppercase tracking-[0.08em] text-muted-foreground">

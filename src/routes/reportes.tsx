@@ -9,14 +9,25 @@ export const Route = createFileRoute("/reportes")({
   head: () => ({
     meta: [
       { title: "Reportes y KPIs | Surfrigo Control Tower" },
-      { name: "description", content: "Módulo previsto para cumplimiento de ETA, equilibrio de km por chofer y performance de cruces." },
+      {
+        name: "description",
+        content:
+          "Módulo previsto para cumplimiento de ETA, equilibrio de km por chofer y performance de cruces.",
+      },
       { property: "og:title", content: "Reportes y KPIs | Surfrigo Control Tower" },
-      { property: "og:description", content: "Próximo módulo: cumplimiento de ETA, km por chofer y performance de fronteras." },
+      {
+        property: "og:description",
+        content: "Próximo módulo: cumplimiento de ETA, km por chofer y performance de fronteras.",
+      },
     ],
   }),
   component: () => (
     <AppShell>
-      <PageHeader icon={BarChart3} title="Reportes / KPIs" subtitle="Módulo planificado para la siguiente iteración" />
+      <PageHeader
+        icon={BarChart3}
+        title="Reportes / KPIs"
+        subtitle="Módulo planificado para la siguiente iteración"
+      />
       <Placeholder
         title="Reportes y KPIs"
         items={[

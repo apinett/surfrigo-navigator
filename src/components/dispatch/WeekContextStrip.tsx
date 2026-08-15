@@ -35,7 +35,9 @@ export function WeekContextStrip({
               type="button"
               onClick={() => onSelect(d.dayIndex)}
               className={`rounded border px-1.5 pb-1.5 pt-1 text-left transition-colors ${
-                d.dayIndex === dayIndex ? "border-primary bg-primary/8" : "border-border hover:border-primary/40"
+                d.dayIndex === dayIndex
+                  ? "border-primary bg-primary/8"
+                  : "border-border hover:border-primary/40"
               }`}
             >
               <p className="flex items-center justify-between text-[10px] text-muted-foreground">
@@ -43,9 +45,24 @@ export function WeekContextStrip({
                 <span className="tabular">{fmtDay(d.date)}</span>
               </p>
               <div className="mt-1.5 flex h-14 items-end gap-1">
-                <Bar value={d.availableNow} max={max} className="bg-st-disponible/70" title={`${d.availableNow} disponibles`} />
-                <Bar value={d.arrivals} max={max} className="bg-st-transito/70" title={`${d.arrivals} arribos previstos`} />
-                <Bar value={pending} max={max} className="bg-st-programada/70" title={`${pending} salidas pendientes`} />
+                <Bar
+                  value={d.availableNow}
+                  max={max}
+                  className="bg-st-disponible/70"
+                  title={`${d.availableNow} disponibles`}
+                />
+                <Bar
+                  value={d.arrivals}
+                  max={max}
+                  className="bg-st-transito/70"
+                  title={`${d.arrivals} arribos previstos`}
+                />
+                <Bar
+                  value={pending}
+                  max={max}
+                  className="bg-st-programada/70"
+                  title={`${pending} salidas pendientes`}
+                />
               </div>
               <p className="tabular mt-1 text-[10px] text-muted-foreground">
                 {d.availableNow} · {d.arrivals} · {pending}
@@ -58,7 +75,17 @@ export function WeekContextStrip({
   );
 }
 
-function Bar({ value, max, className, title }: { value: number; max: number; className: string; title: string }) {
+function Bar({
+  value,
+  max,
+  className,
+  title,
+}: {
+  value: number;
+  max: number;
+  className: string;
+  title: string;
+}) {
   return (
     <span
       title={title}

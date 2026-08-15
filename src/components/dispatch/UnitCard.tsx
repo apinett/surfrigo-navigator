@@ -78,7 +78,8 @@ export function UnitCard({
             )}
           </p>
           <p className="truncate text-[10.5px] text-muted-foreground">
-            {activeDriver ? `${activeDriver.homeCity}, ${activeDriver.province}` : "—"} · {unit.trailerType}
+            {activeDriver ? `${activeDriver.homeCity}, ${activeDriver.province}` : "—"} ·{" "}
+            {unit.trailerType}
           </p>
         </button>
         {score !== undefined && (
@@ -99,7 +100,8 @@ export function UnitCard({
           </span>
         ) : (
           <span className="flex items-center gap-1 rounded border border-st-transito/40 bg-st-transito/12 px-1.5 py-0.5 text-[10px] font-medium text-st-transito">
-            <Clock className="size-2.5" /> ETA {availability.readyAt?.slice(5, 16).replace("T", " ")}
+            <Clock className="size-2.5" /> ETA{" "}
+            {availability.readyAt?.slice(5, 16).replace("T", " ")}
           </span>
         )}
         {availability.needsWorkshop && (
@@ -135,10 +137,14 @@ export function UnitCard({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-64">
-            <DropdownMenuLabel className="text-[11px]">Asignar unidad {unit.code} a…</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-[11px]">
+              Asignar unidad {unit.code} a…
+            </DropdownMenuLabel>
             {requests.map((r) => (
               <DropdownMenuItem key={r.id} onSelect={() => onAssign(r.id)} className="text-xs">
-                <span className="tabular mr-1 font-mono text-[10px] text-muted-foreground">#{r.priority}</span>
+                <span className="tabular mr-1 font-mono text-[10px] text-muted-foreground">
+                  #{r.priority}
+                </span>
                 {locationName(r.destinationId)} · salida {r.suggestedDepartureTime}
               </DropdownMenuItem>
             ))}

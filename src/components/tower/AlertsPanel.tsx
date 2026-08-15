@@ -1,11 +1,4 @@
-import {
-  AlertTriangle,
-  CalendarX,
-  Clock,
-  FileWarning,
-  ShieldAlert,
-  TruckIcon,
-} from "lucide-react";
+import { AlertTriangle, CalendarX, Clock, FileWarning, ShieldAlert, TruckIcon } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import type { Alert, AlertKind, WeeklyPlan } from "@/domain/types";

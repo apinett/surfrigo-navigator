@@ -158,17 +158,23 @@ function PlanificacionDiariaPage() {
     }
     const filled = current.filter((a) => a.requestId === requestId).length;
     if (filled >= request.unitsRequired && !force) {
-      toast.warning(`${locationName(request.destinationId)} ya cubrió su cupo (${filled}/${request.unitsRequired})`, {
-        description: "Podés asignar de todas formas si Depósito amplía el pedido.",
-        action: { label: "Asignar igual", onClick: () => assign(unitId, requestId, true) },
-      });
+      toast.warning(
+        `${locationName(request.destinationId)} ya cubrió su cupo (${filled}/${request.unitsRequired})`,
+        {
+          description: "Podés asignar de todas formas si Depósito amplía el pedido.",
+          action: { label: "Asignar igual", onClick: () => assign(unitId, requestId, true) },
+        },
+      );
       return;
     }
 
     const created = makeAssignment(unitId, requestId);
     if (!created) return;
     const previous = current.find((a) => a.unitId === unitId);
-    const next: Store = { ...store, [dayKey]: [...current.filter((a) => a.unitId !== unitId), created] };
+    const next: Store = {
+      ...store,
+      [dayKey]: [...current.filter((a) => a.unitId !== unitId), created],
+    };
     const label = previous
       ? `Unidad ${unit.code} movida a ${locationName(request.destinationId)}`
       : `Unidad ${unit.code} asignada a ${locationName(request.destinationId)}`;
@@ -249,7 +255,9 @@ function PlanificacionDiariaPage() {
         (statusFilter === "todos" || unit.status === statusFilter) &&
         (locationFilter === "todas" || availability.locationId === locationFilter) &&
         (lastDestFilter === "todos" || unit.lastDestinationId === lastDestFilter) &&
-        (driverFilter === "todos" || unit.driverId === driverFilter || unit.reliefDriverId === driverFilter)
+        (driverFilter === "todos" ||
+          unit.driverId === driverFilter ||
+          unit.reliefDriverId === driverFilter)
       );
     })
     .sort((a, b) => (b.score ?? 0) - (a.score ?? 0) || a.unit.code.localeCompare(b.unit.code));
@@ -280,13 +288,27 @@ function PlanificacionDiariaPage() {
         actions={
           <>
             <div className="hidden items-center gap-1 sm:flex">
-              <Button size="icon" variant="outline" aria-label="Semana anterior" onClick={() => setOffset((o) => o - 1)}>
+              <Button
+                size="icon"
+                variant="outline"
+                aria-label="Semana anterior"
+                onClick={() => setOffset((o) => o - 1)}
+              >
                 <ChevronLeft className="size-4" />
               </Button>
-              <Button size="sm" variant={offset === 0 ? "default" : "outline"} onClick={() => setOffset(0)}>
+              <Button
+                size="sm"
+                variant={offset === 0 ? "default" : "outline"}
+                onClick={() => setOffset(0)}
+              >
                 Semana actual
               </Button>
-              <Button size="icon" variant="outline" aria-label="Semana siguiente" onClick={() => setOffset((o) => o + 1)}>
+              <Button
+                size="icon"
+                variant="outline"
+                aria-label="Semana siguiente"
+                onClick={() => setOffset((o) => o + 1)}
+              >
                 <ChevronRight className="size-4" />
               </Button>
             </div>
@@ -307,7 +329,12 @@ function PlanificacionDiariaPage() {
           onSelect={setDayIndex}
         />
 
-        <DndContext id="despacho-diario" sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
+        <DndContext
+          id="despacho-diario"
+          sensors={sensors}
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
+        >
           <div className="grid gap-3 xl:grid-cols-[340px_minmax(0,1fr)]">
             {/* A — pool de unidades */}
             <aside className="panel flex max-h-[calc(100vh-13rem)] flex-col overflow-hidden p-0">
@@ -330,14 +357,38 @@ function PlanificacionDiariaPage() {
                   />
                 </div>
                 <div className="mt-2 grid grid-cols-2 gap-1.5">
-                  <FilterSelect value={statusFilter} onChange={setStatusFilter} placeholder="Estado" allLabel="Todos los estados" allValue="todos"
-                    options={STATUS_ORDER.map((s) => ({ value: s, label: STATUS_META[s].label }))} />
-                  <FilterSelect value={locationFilter} onChange={setLocationFilter} placeholder="Ubicación" allLabel="Toda ubicación" allValue="todas"
-                    options={locationOptions.map((l) => ({ value: l, label: locationName(l) }))} />
-                  <FilterSelect value={lastDestFilter} onChange={setLastDestFilter} placeholder="Destino anterior" allLabel="Cualquier destino previo" allValue="todos"
-                    options={lastDestOptions.map((l) => ({ value: l, label: locationName(l) }))} />
-                  <FilterSelect value={driverFilter} onChange={setDriverFilter} placeholder="Chofer" allLabel="Todos los choferes" allValue="todos"
-                    options={plan.drivers.map((d) => ({ value: d.id, label: d.name }))} />
+                  <FilterSelect
+                    value={statusFilter}
+                    onChange={setStatusFilter}
+                    placeholder="Estado"
+                    allLabel="Todos los estados"
+                    allValue="todos"
+                    options={STATUS_ORDER.map((s) => ({ value: s, label: STATUS_META[s].label }))}
+                  />
+                  <FilterSelect
+                    value={locationFilter}
+                    onChange={setLocationFilter}
+                    placeholder="Ubicación"
+                    allLabel="Toda ubicación"
+                    allValue="todas"
+                    options={locationOptions.map((l) => ({ value: l, label: locationName(l) }))}
+                  />
+                  <FilterSelect
+                    value={lastDestFilter}
+                    onChange={setLastDestFilter}
+                    placeholder="Destino anterior"
+                    allLabel="Cualquier destino previo"
+                    allValue="todos"
+                    options={lastDestOptions.map((l) => ({ value: l, label: locationName(l) }))}
+                  />
+                  <FilterSelect
+                    value={driverFilter}
+                    onChange={setDriverFilter}
+                    placeholder="Chofer"
+                    allLabel="Todos los choferes"
+                    allValue="todos"
+                    options={plan.drivers.map((d) => ({ value: d.id, label: d.name }))}
+                  />
                 </div>
                 {selectedRequest && (
                   <p className="mt-2 text-[10.5px] text-primary">
@@ -360,7 +411,9 @@ function PlanificacionDiariaPage() {
                     }
                   />
                 ))}
-                {now.length === 0 && <Empty label="Sin unidades libres en CD Ezeiza para este día." />}
+                {now.length === 0 && (
+                  <Empty label="Sin unidades libres en CD Ezeiza para este día." />
+                )}
 
                 <SectionTitle label={`Próximas a quedar disponibles (${next.length})`} />
                 {next.map((data) => (
