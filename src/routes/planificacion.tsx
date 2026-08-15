@@ -307,7 +307,7 @@ function PlanificacionDiariaPage() {
           onSelect={setDayIndex}
         />
 
-        <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
+        <DndContext id="despacho-diario" sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
           <div className="grid gap-3 xl:grid-cols-[340px_minmax(0,1fr)]">
             {/* A — pool de unidades */}
             <aside className="panel flex max-h-[calc(100vh-13rem)] flex-col overflow-hidden p-0">
