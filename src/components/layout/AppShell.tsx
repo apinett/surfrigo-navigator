@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import {
   BarChart3,
-  CalendarRange,
+  CalendarClock,
   Fuel,
   Gauge,
   MessageSquare,
@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 
 const NAV = [
   { to: "/", label: "Torre de Control", icon: Gauge, ready: true },
-  { to: "/planificacion", label: "Planificación semanal", icon: CalendarRange, ready: true },
+  { to: "/planificacion", label: "Planificación diaria", icon: CalendarClock, ready: true },
   { to: "/flota", label: "Unidades y choferes", icon: Truck, ready: true },
   { to: "/chile", label: "Movimientos Chile", icon: Ship, ready: true },
   { to: "/fronteras", label: "Fronteras y ETA", icon: SignpostBig, ready: true },
