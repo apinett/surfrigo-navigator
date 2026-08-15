@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import {
   BarChart3,
-  CalendarRange,
+  CalendarClock,
   Fuel,
   Gauge,
   MessageSquare,
