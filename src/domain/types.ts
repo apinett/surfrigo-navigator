@@ -26,11 +26,11 @@ export interface LocationNode {
   name: string;
   kind: "cd" | "base" | "puerto" | "frontera" | "taller";
   country: Country;
-  province?: string;
+  province?: string | undefined;
   /** Km de referencia desde CD Ezeiza (planificación / equilibrio de km). */
-  kmFromEzeiza?: number;
+  kmFromEzeiza?: number | undefined;
   /** Horas de tránsito estimadas desde CD Ezeiza. */
-  transitHours?: number;
+  transitHours?: number | undefined;
 }
 
 /** Paso fronterizo con ventana de atención y corte documental. */
@@ -43,7 +43,7 @@ export interface BorderCrossing {
   /** Hora límite para presentar documentación antes del cierre. */
   paperworkCutoff: string;
   avgProcessMinutes: number;
-  notes?: string;
+  notes?: string | undefined;
 }
 
 export interface Driver {
@@ -57,7 +57,7 @@ export interface Driver {
   kmPeriod: number;
   kmTarget: number;
   restDaysAvailable: number;
-  lastDestinationId?: string;
+  lastDestinationId?: string | undefined;
   status: "activo" | "descanso" | "licencia";
 }
 
@@ -69,15 +69,15 @@ export interface Unit {
   trailerPlate: string;
   trailerType: "Frigorífico 30 pallets" | "Frigorífico 28 pallets" | "Isotérmico";
   driverId: string;
-  reliefDriverId?: string;
+  reliefDriverId?: string | undefined;
   status: OperationStatus;
   currentLocationId: string;
-  lastDestinationId?: string;
+  lastDestinationId?: string | undefined;
   kmPeriod: number;
   kmTarget: number;
-  nextTripId?: string;
+  nextTripId?: string | undefined;
   workshopDue: boolean;
-  notes?: string;
+  notes?: string | undefined;
 }
 
 /** Viaje planificado o en curso (Ezeiza → base, o retorno Chile → Ezeiza). */
@@ -90,13 +90,13 @@ export interface Trip {
   status: OperationStatus;
   departureAt: string;
   /** Hora objetivo de descarga fijada por el previsto de depósito. */
-  targetUnloadAt?: string;
+  targetUnloadAt?: string | undefined;
   etaAt: string;
   /** Margen operativo en minutos respecto del objetivo (negativo = tarde). */
-  marginMinutes?: number;
+  marginMinutes?: number | undefined;
   cargo: string;
   km: number;
-  borderCrossingId?: string;
+  borderCrossingId?: string | undefined;
   documentationReady: boolean;
 }
 
@@ -104,19 +104,19 @@ export interface Trip {
 export interface Movement {
   id: string;
   unitId: string;
-  tripId?: string;
+  tripId?: string | undefined;
   status: OperationStatus;
   /** Índice de día 0 = lunes … 6 = domingo. */
   dayIndex: number;
   /** Días que ocupa el bloque (barra continua). */
   span: number;
   title: string;
-  subtitle?: string;
-  fromId?: string;
-  toId?: string;
-  etaAt?: string;
-  riskLevel?: "bajo" | "medio" | "alto";
-  tooltip?: string;
+  subtitle?: string | undefined;
+  fromId?: string | undefined;
+  toId?: string | undefined;
+  etaAt?: string | undefined;
+  riskLevel?: "bajo" | "medio" | "alto" | undefined;
+  tooltip?: string | undefined;
 }
 
 /** Totales de disponibilidad por nodo y por día de la semana. */
@@ -133,12 +133,12 @@ export interface BorderEvent {
   departedFromId: string;
   departedAt: string;
   etaBorderAt: string;
-  paperworkSentAt?: string;
+  paperworkSentAt?: string | undefined;
   crossProbability: number;
   outcome: "pendiente" | "cruzo" | "no_cruzo" | "riesgo";
   /** ETA recalculado si no cruza y debe esperar la reapertura. */
-  recalculatedEtaAt?: string;
-  comment?: string;
+  recalculatedEtaAt?: string | undefined;
+  comment?: string | undefined;
 }
 
 export type AlertKind =
@@ -153,7 +153,7 @@ export interface Alert {
   id: string;
   kind: AlertKind;
   severity: "critica" | "alta" | "media";
-  unitId?: string;
+  unitId?: string | undefined;
   title: string;
   detail: string;
   createdAt: string;
@@ -167,7 +167,7 @@ export interface AssignmentRecommendation {
   score: number;
   /** Motivos explicables — nunca mostrar un score sin razones. */
   reasons: string[];
-  warnings?: string[];
+  warnings?: string[] | undefined;
   suggestedDepartureAt: string;
 }
 
