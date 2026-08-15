@@ -10,33 +10,141 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ChileRouteImport } from './routes/chile'
+import { Route as CombustibleRouteImport } from './routes/combustible'
+import { Route as ComunicacionesRouteImport } from './routes/comunicaciones'
+import { Route as ConfiguracionRouteImport } from './routes/configuracion'
+import { Route as FlotaRouteImport } from './routes/flota'
+import { Route as FronterasRouteImport } from './routes/fronteras'
+import { Route as PlanificacionRouteImport } from './routes/planificacion'
+import { Route as ReportesRouteImport } from './routes/reportes'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChileRoute = ChileRouteImport.update({
+  id: '/chile',
+  path: '/chile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CombustibleRoute = CombustibleRouteImport.update({
+  id: '/combustible',
+  path: '/combustible',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunicacionesRoute = ComunicacionesRouteImport.update({
+  id: '/comunicaciones',
+  path: '/comunicaciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracionRoute = ConfiguracionRouteImport.update({
+  id: '/configuracion',
+  path: '/configuracion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlotaRoute = FlotaRouteImport.update({
+  id: '/flota',
+  path: '/flota',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FronterasRoute = FronterasRouteImport.update({
+  id: '/fronteras',
+  path: '/fronteras',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanificacionRoute = PlanificacionRouteImport.update({
+  id: '/planificacion',
+  path: '/planificacion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportesRoute = ReportesRouteImport.update({
+  id: '/reportes',
+  path: '/reportes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/chile': typeof ChileRoute
+  '/combustible': typeof CombustibleRoute
+  '/comunicaciones': typeof ComunicacionesRoute
+  '/configuracion': typeof ConfiguracionRoute
+  '/flota': typeof FlotaRoute
+  '/fronteras': typeof FronterasRoute
+  '/planificacion': typeof PlanificacionRoute
+  '/reportes': typeof ReportesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/chile': typeof ChileRoute
+  '/combustible': typeof CombustibleRoute
+  '/comunicaciones': typeof ComunicacionesRoute
+  '/configuracion': typeof ConfiguracionRoute
+  '/flota': typeof FlotaRoute
+  '/fronteras': typeof FronterasRoute
+  '/planificacion': typeof PlanificacionRoute
+  '/reportes': typeof ReportesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/chile': typeof ChileRoute
+  '/combustible': typeof CombustibleRoute
+  '/comunicaciones': typeof ComunicacionesRoute
+  '/configuracion': typeof ConfiguracionRoute
+  '/flota': typeof FlotaRoute
+  '/fronteras': typeof FronterasRoute
+  '/planificacion': typeof PlanificacionRoute
+  '/reportes': typeof ReportesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/chile'
+    | '/combustible'
+    | '/comunicaciones'
+    | '/configuracion'
+    | '/flota'
+    | '/fronteras'
+    | '/planificacion'
+    | '/reportes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/chile'
+    | '/combustible'
+    | '/comunicaciones'
+    | '/configuracion'
+    | '/flota'
+    | '/fronteras'
+    | '/planificacion'
+    | '/reportes'
+  id:
+    | '__root__'
+    | '/'
+    | '/chile'
+    | '/combustible'
+    | '/comunicaciones'
+    | '/configuracion'
+    | '/flota'
+    | '/fronteras'
+    | '/planificacion'
+    | '/reportes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChileRoute: typeof ChileRoute
+  CombustibleRoute: typeof CombustibleRoute
+  ComunicacionesRoute: typeof ComunicacionesRoute
+  ConfiguracionRoute: typeof ConfiguracionRoute
+  FlotaRoute: typeof FlotaRoute
+  FronterasRoute: typeof FronterasRoute
+  PlanificacionRoute: typeof PlanificacionRoute
+  ReportesRoute: typeof ReportesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +156,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/chile': {
+      id: '/chile'
+      path: '/chile'
+      fullPath: '/chile'
+      preLoaderRoute: typeof ChileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/combustible': {
+      id: '/combustible'
+      path: '/combustible'
+      fullPath: '/combustible'
+      preLoaderRoute: typeof CombustibleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunicaciones': {
+      id: '/comunicaciones'
+      path: '/comunicaciones'
+      fullPath: '/comunicaciones'
+      preLoaderRoute: typeof ComunicacionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracion': {
+      id: '/configuracion'
+      path: '/configuracion'
+      fullPath: '/configuracion'
+      preLoaderRoute: typeof ConfiguracionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flota': {
+      id: '/flota'
+      path: '/flota'
+      fullPath: '/flota'
+      preLoaderRoute: typeof FlotaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fronteras': {
+      id: '/fronteras'
+      path: '/fronteras'
+      fullPath: '/fronteras'
+      preLoaderRoute: typeof FronterasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planificacion': {
+      id: '/planificacion'
+      path: '/planificacion'
+      fullPath: '/planificacion'
+      preLoaderRoute: typeof PlanificacionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reportes': {
+      id: '/reportes'
+      path: '/reportes'
+      fullPath: '/reportes'
+      preLoaderRoute: typeof ReportesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChileRoute: ChileRoute,
+  CombustibleRoute: CombustibleRoute,
+  ComunicacionesRoute: ComunicacionesRoute,
+  ConfiguracionRoute: ConfiguracionRoute,
+  FlotaRoute: FlotaRoute,
+  FronterasRoute: FronterasRoute,
+  PlanificacionRoute: PlanificacionRoute,
+  ReportesRoute: ReportesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
