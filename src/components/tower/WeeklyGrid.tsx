@@ -17,7 +17,7 @@ export function WeeklyGrid({
   units: Unit[];
   movements: Movement[];
   weekStart: string;
-  selectedUnitId?: string;
+  selectedUnitId?: string | undefined;
   onSelectUnit: (unitId: string) => void;
 }) {
   const dates = weekDates(weekStart);

@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/sheet";
 import { CommsCenter } from "@/components/tower/CommsCenter";
 import { StatusChip } from "@/components/tower/StatusChip";
-import { STATUS_META, locationName } from "@/domain/catalog";
+import { DAYS, STATUS_META, locationName } from "@/domain/catalog";
 import { driverById } from "@/domain/demo";
 import type { WeeklyPlan } from "@/domain/types";
-import { DAYS, fmtStamp } from "@/lib/week";
+import { fmtStamp } from "@/lib/week";
 
 export function UnitDrawer({
   plan,
@@ -23,7 +23,7 @@ export function UnitDrawer({
   onClose,
 }: {
   plan: WeeklyPlan;
-  unitId?: string;
+  unitId?: string | undefined;
   onClose: () => void;
 }) {
   const unit = plan.units.find((u) => u.id === unitId);

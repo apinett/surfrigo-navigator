@@ -9,7 +9,7 @@ export function StatusChip({
   withTooltip = true,
 }: {
   status: OperationStatus;
-  className?: string;
+  className?: string | undefined;
   withTooltip?: boolean;
 }) {
   const meta = STATUS_META[status];

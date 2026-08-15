@@ -20,7 +20,7 @@ export function CommsCenter({
 }: {
   plan: WeeklyPlan;
   expanded?: boolean;
-  unitId?: string;
+  unitId?: string | undefined;
 }) {
   const drafts = unitId ? plan.communications.filter((c) => c.unitId === unitId) : plan.communications;
 

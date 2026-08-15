@@ -9,8 +9,8 @@ export function PageHeader({
 }: {
   icon: LucideIcon;
   title: string;
-  subtitle?: string;
-  actions?: ReactNode;
+  subtitle?: string | undefined;
+  actions?: ReactNode | undefined;
 }) {
   return (
     <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-border bg-surface/60 px-4 py-3.5 backdrop-blur lg:px-6">
