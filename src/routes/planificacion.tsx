@@ -382,7 +382,7 @@ function PlanificacionDiariaPage() {
             <div className="min-w-0 space-y-3">
               <div className="panel grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-3 py-2">
                 <h2 className="truncate text-[12px] font-semibold uppercase tracking-[0.1em]">
-                  Previsto de Depósito · salidas del {DAYS[dayIndex].toLowerCase()}
+                  Previsto de Depósito · salidas del {(DAYS[dayIndex] ?? "día").toLowerCase()}
                 </h2>
                 <p className="tabular shrink-0 text-[11px] text-muted-foreground">
                   {assignments.length}/{requiredTotal} unidades asignadas · objetivo{" "}
