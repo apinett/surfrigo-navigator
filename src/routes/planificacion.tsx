@@ -33,7 +33,7 @@ import { buildWeeklyPlan, driverById } from "@/domain/demo";
 import { buildDailyPlan, buildDepositRequests, buildWeekContext } from "@/domain/dispatch-demo";
 import { DISPATCH_CONFIG, evaluateAssignment, prioritizeRequests } from "@/domain/dispatch";
 import type { DispatchAssignment, UnitAvailability } from "@/domain/types";
-import { SIMULATED_TODAY_INDEX, weekStartForOffset } from "@/lib/week";
+import { SIMULATED_TODAY_INDEX, fmtMargin, fmtStamp, weekStartForOffset } from "@/lib/week";
 
 export const Route = createFileRoute("/planificacion")({
   head: () => ({
@@ -175,7 +175,7 @@ function PlanificacionDiariaPage() {
     commit(next, label);
 
     toast.success(label, {
-      description: `ETA ${created.etaAt.slice(5, 16).replace("T", " ")} · margen ${Math.round(created.marginMinutes / 60)} h · riesgo ${created.risk} · score ${created.score}/100`,
+      description: `ETA ${fmtStamp(created.etaAt)} · margen ${fmtMargin(created.marginMinutes)} · riesgo ${created.risk} · score ${created.score}/100`,
       action: { label: "Deshacer", onClick: undo },
     });
   };
