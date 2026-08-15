@@ -215,3 +215,88 @@ export interface WeeklyPlan {
     salidasEnRiesgo: number;
   };
 }
+
+/* ─────────────────────────────────────────────────────────────
+ * Planificación diaria de despacho (previsto de Depósito)
+ * Modelado para reemplazarse por tablas Supabase sin tocar la UI.
+ * ───────────────────────────────────────────────────────────── */
+
+export type RiskLevel = "bajo" | "medio" | "alto";
+
+/** Parámetros operativos configurables (hoy locales, luego tabla `config`). */
+export interface DispatchConfig {
+  /** Objetivo de km por período para unidades y choferes. */
+  kmTarget: number;
+  /** Margen mínimo (min) para considerar riesgo bajo. */
+  lowRiskMarginMinutes: number;
+  /** Margen mínimo (min) para considerar riesgo medio. */
+  mediumRiskMarginMinutes: number;
+  /** Horas de preparación en taller antes de volver a estar disponible. */
+  workshopPrepHours: number;
+}
+
+/** Salida solicitada por Depósito para un día concreto. */
+export interface DepositRequest {
+  id: string;
+  dayIndex: number;
+  destinationId: string;
+  unitsRequired: number;
+  /** Hora sugerida de salida desde CD Ezeiza, "HH:mm". */
+  suggestedDepartureTime: string;
+  /** Cierre de la ventana de salida, "HH:mm". */
+  windowEndTime: string;
+  /** Objetivo de descarga informado por el previsto (ISO). */
+  targetUnloadAt: string;
+  cargo: string;
+  km: number;
+  notes?: string | undefined;
+}
+
+/** Disponibilidad de una unidad para el día en foco. */
+export interface UnitAvailability {
+  unitId: string;
+  kind: "ahora" | "proxima";
+  locationId: string;
+  /** ISO en que la unidad queda operativa (para "próximas"). */
+  readyAt?: string | undefined;
+  /** Requiere revisión de taller antes de salir. */
+  needsWorkshop: boolean;
+  note?: string | undefined;
+}
+
+/** Factor explicable del score de asignación. */
+export interface ScoreFactor {
+  key: string;
+  label: string;
+  points: number;
+  max: number;
+  detail: string;
+  kind: "positivo" | "advertencia" | "supuesto";
+}
+
+export interface AssignmentScoreBreakdown {
+  total: number;
+  factors: ScoreFactor[];
+}
+
+/** Asignación unidad → salida solicitada, decidida por el analista. */
+export interface DispatchAssignment {
+  id: string;
+  requestId: string;
+  unitId: string;
+  createdAt: string;
+  departureAt: string;
+  etaAt: string;
+  marginMinutes: number;
+  risk: RiskLevel;
+  score: number;
+}
+
+export interface DailyPlan {
+  weekStart: string;
+  weekLabel: string;
+  dayIndex: number;
+  date: string;
+  requests: DepositRequest[];
+  availability: UnitAvailability[];
+}
