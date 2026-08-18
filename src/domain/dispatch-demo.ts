@@ -26,7 +26,7 @@ const REQUESTS_BY_DAY: RequestSeed[][] = [
   [
     {
       destinationId: "bahia",
-      unitsRequired: 2,
+      unitsRequired: 1,
       departure: "14:00",
       windowEnd: "17:00",
       targetDayOffset: 1,
@@ -36,7 +36,7 @@ const REQUESTS_BY_DAY: RequestSeed[][] = [
     },
     {
       destinationId: "neuquen",
-      unitsRequired: 2,
+      unitsRequired: 1,
       departure: "12:00",
       windowEnd: "16:00",
       targetDayOffset: 2,
@@ -75,7 +75,7 @@ const REQUESTS_BY_DAY: RequestSeed[][] = [
     },
     {
       destinationId: "bariloche",
-      unitsRequired: 2,
+      unitsRequired: 1,
       departure: "09:00",
       windowEnd: "12:00",
       targetDayOffset: 2,
@@ -95,7 +95,7 @@ const REQUESTS_BY_DAY: RequestSeed[][] = [
   [
     {
       destinationId: "neuquen",
-      unitsRequired: 2,
+      unitsRequired: 1,
       departure: "12:30",
       windowEnd: "16:00",
       targetDayOffset: 2,
@@ -104,7 +104,7 @@ const REQUESTS_BY_DAY: RequestSeed[][] = [
     },
     {
       destinationId: "bahia",
-      unitsRequired: 2,
+      unitsRequired: 1,
       departure: "15:00",
       windowEnd: "18:00",
       targetDayOffset: 1,
@@ -134,7 +134,7 @@ const REQUESTS_BY_DAY: RequestSeed[][] = [
   [
     {
       destinationId: "bahia",
-      unitsRequired: 2,
+      unitsRequired: 1,
       departure: "14:30",
       windowEnd: "18:00",
       targetDayOffset: 1,
@@ -163,7 +163,7 @@ const REQUESTS_BY_DAY: RequestSeed[][] = [
   [
     {
       destinationId: "bahia",
-      unitsRequired: 2,
+      unitsRequired: 1,
       departure: "13:30",
       windowEnd: "17:00",
       targetDayOffset: 1,
@@ -181,7 +181,7 @@ const REQUESTS_BY_DAY: RequestSeed[][] = [
     },
     {
       destinationId: "trelew",
-      unitsRequired: 2,
+      unitsRequired: 1,
       departure: "10:30",
       windowEnd: "14:00",
       targetDayOffset: 2,
