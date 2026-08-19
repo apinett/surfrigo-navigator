@@ -1,5 +1,5 @@
 import { useDroppable } from "@dnd-kit/core";
-import { AlertTriangle, Clock, Flag, Route, Target, X } from "lucide-react";
+import { AlertTriangle, Clock, Flag, Pencil, Route, Target, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
