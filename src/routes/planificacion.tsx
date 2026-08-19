@@ -34,7 +34,7 @@ import { DAYS, STATUS_META, STATUS_ORDER, locationName } from "@/domain/catalog"
 import { buildWeeklyPlan, driverById } from "@/domain/demo";
 import { buildDailyPlan, buildDepositRequests, buildWeekContext } from "@/domain/dispatch-demo";
 import { DISPATCH_CONFIG, evaluateAssignment, prioritizeRequests } from "@/domain/dispatch";
-import type { DispatchAssignment, UnitAvailability } from "@/domain/types";
+import type { DepositRequest, DispatchAssignment, UnitAvailability } from "@/domain/types";
 import { SIMULATED_TODAY_INDEX, fmtMargin, fmtStamp, weekStartForOffset } from "@/lib/week";
 
 export const Route = createFileRoute("/planificacion")({
@@ -74,7 +74,6 @@ function PlanificacionDiariaPage() {
   const [requestOverrides, setRequestOverrides] = useState<Record<string, DepositRequest[]>>({});
   const [editingId, setEditingId] = useState<string | null>(null);
 
-
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("todos");
   const [locationFilter, setLocationFilter] = useState("todas");
@@ -84,7 +83,11 @@ function PlanificacionDiariaPage() {
   const plan = useMemo(() => buildWeeklyPlan(offset), [offset]);
   const daily = useMemo(() => buildDailyPlan(offset, dayIndex), [offset, dayIndex]);
   const week = useMemo(() => buildWeekContext(offset, plan.units), [offset, plan.units]);
-  const requests = useMemo(() => prioritizeRequests(daily.requests, daily.date), [daily]);
+  const dayRequests = requestOverrides[keyFor(offset, dayIndex)] ?? daily.requests;
+  const requests = useMemo(
+    () => prioritizeRequests(dayRequests, daily.date),
+    [dayRequests, daily.date],
+  );
 
   const dayKey = keyFor(offset, dayIndex);
   const assignments = store[dayKey] ?? [];
@@ -100,14 +103,16 @@ function PlanificacionDiariaPage() {
   const alertsByDay = useMemo(
     () =>
       Array.from({ length: 7 }, (_, d) => {
-        const reqs = buildDepositRequests(weekStartForOffset(offset), d);
+        const reqs =
+          requestOverrides[keyFor(offset, d)] ??
+          buildDepositRequests(weekStartForOffset(offset), d);
         const required = reqs.reduce((s, r) => s + r.unitsRequired, 0);
         const list = store[keyFor(offset, d)] ?? [];
         const unmet = Math.max(0, required - list.length);
         const risky = list.filter((a) => a.risk === "alto").length;
         return unmet + risky;
       }),
-    [store, offset],
+    [store, offset, requestOverrides],
   );
 
   const commit = (next: Store, label: string) => {
@@ -228,6 +233,51 @@ function PlanificacionDiariaPage() {
     });
   };
 
+  const setDayRequests = (list: DepositRequest[]) =>
+    setRequestOverrides((prev) => ({ ...prev, [keyFor(offset, dayIndex)]: list }));
+
+  const importRequests = (incoming: DepositRequest[], mode: "replace" | "append") => {
+    const normalized = incoming.map((r) => ({ ...r, dayIndex, unitsRequired: 1 }));
+    if (mode === "replace") {
+      setDayRequests(normalized);
+      commit({ ...store, [dayKey]: [] }, "Previsto reemplazado");
+      toast.success(`${normalized.length} salidas cargadas para el día`, {
+        description: "Se limpiaron las asignaciones previas del día.",
+      });
+    } else {
+      setDayRequests([...dayRequests, ...normalized]);
+      toast.success(`${normalized.length} salidas agregadas al previsto del día`);
+    }
+  };
+
+  const saveRequest = (updated: DepositRequest) => {
+    setDayRequests(dayRequests.map((r) => (r.id === updated.id ? updated : r)));
+    setEditingId(null);
+    const current = store[dayKey] ?? [];
+    const affected = current.filter((a) => a.requestId === updated.id);
+    if (affected.length) {
+      setStore((prev) => ({
+        ...prev,
+        [dayKey]: (prev[dayKey] ?? []).filter((a) => a.requestId !== updated.id),
+      }));
+      toast.success(`Salida a ${locationName(updated.destinationId)} actualizada`, {
+        description: "Volvé a asignar la unidad para recalcular ETA, margen y riesgo.",
+      });
+    } else {
+      toast.success(`Salida a ${locationName(updated.destinationId)} actualizada`);
+    }
+  };
+
+  const deleteRequest = (requestId: string) => {
+    setDayRequests(dayRequests.filter((r) => r.id !== requestId));
+    setStore((prev) => ({
+      ...prev,
+      [dayKey]: (prev[dayKey] ?? []).filter((a) => a.requestId !== requestId),
+    }));
+    setEditingId(null);
+    toast("Salida eliminada del previsto del día");
+  };
+
   const assignedUnitIds = new Set(assignments.map((a) => a.unitId));
   const selectedRequest = requests.find((r) => r.id === selectedRequestId);
 
@@ -317,6 +367,11 @@ function PlanificacionDiariaPage() {
                 <ChevronRight className="size-4" />
               </Button>
             </div>
+            <ImportRequestsDialog
+              dayIndex={dayIndex}
+              dateIso={daily.date}
+              onApply={importRequests}
+            />
             <Button size="sm" variant="outline" onClick={undo} disabled={history.length === 0}>
               <Undo2 className="size-3.5" /> Deshacer
             </Button>
@@ -466,6 +521,7 @@ function PlanificacionDiariaPage() {
                         if (target) assign(target.unitId, requestId);
                       }}
                       onInspect={(a) => inspect(a.unitId, a.requestId, true)}
+                      onEdit={() => setEditingId(request.id)}
                       otherRequests={requests.filter((r) => r.id !== request.id)}
                     />
                   ))}
@@ -491,6 +547,13 @@ function PlanificacionDiariaPage() {
           </DragOverlay>
         </DndContext>
       </div>
+
+      <RequestEditDialog
+        request={dayRequests.find((r) => r.id === editingId) ?? null}
+        onClose={() => setEditingId(null)}
+        onSave={saveRequest}
+        onDelete={deleteRequest}
+      />
 
       <ScoreDrawer view={scoreView} onClose={() => setScoreView(null)} />
     </AppShell>

@@ -81,9 +81,8 @@ export function parseRequestLine(
   // Ventana de salida: "15:00-18:00" o "15 a 18"
   let start = DEFAULT_DEPARTURE_WINDOW.start;
   let end = DEFAULT_DEPARTURE_WINDOW.end;
-  const window = /(\d{1,2}(?:[:.]\d{2})?)\s*(?:-|–|a|hasta)\s*(\d{1,2}(?:[:.]\d{2})?)\s*(?:hs?)?/i.exec(
-    rest,
-  );
+  const window =
+    /(\d{1,2}(?:[:.]\d{2})?)\s*(?:-|–|a|hasta)\s*(\d{1,2}(?:[:.]\d{2})?)\s*(?:hs?)?/i.exec(rest);
   if (window) {
     const s = toTime(window[1]!);
     const e = toTime(window[2]!);
@@ -97,9 +96,10 @@ export function parseRequestLine(
   // Objetivo de descarga: fecha opcional + hora
   let targetDate = addDaysIso(opts.dateIso, 2);
   let targetTime = "06:00";
-  const target = /(\d{1,2}[/-]\d{1,2}(?:[/-]\d{2,4})?)?\s*(?:a\s+las\s+)?(\d{1,2}(?:[:.]\d{2}))\s*(?:hs?)?/i.exec(
-    rest,
-  );
+  const target =
+    /(\d{1,2}[/-]\d{1,2}(?:[/-]\d{2,4})?)?\s*(?:a\s+las\s+)?(\d{1,2}(?:[:.]\d{2}))\s*(?:hs?)?/i.exec(
+      rest,
+    );
   if (target) {
     const d = target[1] ? toDate(target[1], opts.dateIso) : undefined;
     const t = toTime(target[2]!);
