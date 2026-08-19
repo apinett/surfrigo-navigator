@@ -1,5 +1,5 @@
 import { useDroppable } from "@dnd-kit/core";
-import { AlertTriangle, Clock, Flag, Route, Target, X } from "lucide-react";
+import { AlertTriangle, Clock, Flag, Pencil, Route, Target, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +23,7 @@ export function DestinationCard({
   onUnassign,
   onMove,
   onInspect,
+  onEdit,
   otherRequests,
 }: {
   request: PrioritizedRequest;
@@ -33,6 +34,7 @@ export function DestinationCard({
   onUnassign: (assignmentId: string) => void;
   onMove: (assignmentId: string, requestId: string) => void;
   onInspect: (assignment: DispatchAssignment) => void;
+  onEdit: () => void;
   otherRequests: PrioritizedRequest[];
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: request.id });
@@ -61,8 +63,22 @@ export function DestinationCard({
           </h3>
           <p className="truncate text-[11px] text-muted-foreground">{request.cargo}</p>
         </div>
-        <span className="tabular shrink-0 rounded border border-border px-1.5 py-0.5 text-[11px] font-medium">
-          {assignments.length}/{request.unitsRequired}
+        <span className="flex shrink-0 items-center gap-1">
+          <span className="tabular rounded border border-border px-1.5 py-0.5 text-[11px] font-medium">
+            {assignments.length}/{request.unitsRequired}
+          </span>
+          <Button
+            size="icon"
+            variant="ghost"
+            aria-label={`Editar salida a ${locationName(request.destinationId)}`}
+            className="size-6"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit();
+            }}
+          >
+            <Pencil className="size-3.5" />
+          </Button>
         </span>
       </div>
 
