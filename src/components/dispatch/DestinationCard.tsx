@@ -23,6 +23,7 @@ export function DestinationCard({
   onUnassign,
   onMove,
   onInspect,
+  onEdit,
   otherRequests,
 }: {
   request: PrioritizedRequest;
@@ -33,6 +34,7 @@ export function DestinationCard({
   onUnassign: (assignmentId: string) => void;
   onMove: (assignmentId: string, requestId: string) => void;
   onInspect: (assignment: DispatchAssignment) => void;
+  onEdit: () => void;
   otherRequests: PrioritizedRequest[];
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: request.id });
