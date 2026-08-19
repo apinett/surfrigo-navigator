@@ -16,6 +16,8 @@ import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { DayPicker } from "@/components/dispatch/DayPicker";
 import { DestinationCard } from "@/components/dispatch/DestinationCard";
+import { ImportRequestsDialog } from "@/components/dispatch/ImportRequestsDialog";
+import { RequestEditDialog } from "@/components/dispatch/RequestEditDialog";
 import { ScoreDrawer, type ScoreView } from "@/components/dispatch/ScoreDrawer";
 import { UnitCard, type UnitCardData } from "@/components/dispatch/UnitCard";
 import { WeekContextStrip } from "@/components/dispatch/WeekContextStrip";
