@@ -71,6 +71,9 @@ function PlanificacionDiariaPage() {
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null);
   const [scoreView, setScoreView] = useState<ScoreView | null>(null);
   const [dragUnitId, setDragUnitId] = useState<string | null>(null);
+  const [requestOverrides, setRequestOverrides] = useState<Record<string, DepositRequest[]>>({});
+  const [editingId, setEditingId] = useState<string | null>(null);
+
 
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("todos");
