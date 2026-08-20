@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,9 +20,11 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { LOCATIONS, locationById } from "@/domain/catalog";
+import { itineraryDestination, validateItinerary } from "@/domain/route-validation";
 import type { DepositRequest } from "@/domain/types";
 
 const DESTINATIONS = LOCATIONS.filter((l) => l.kind !== "cd" && l.id !== "taller");
+
 
 export function RequestEditDialog({
   request,
