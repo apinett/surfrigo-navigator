@@ -17,9 +17,10 @@ import { DEFAULT_DEPARTURE_WINDOW, parseRequestsText } from "@/domain/dispatch-i
 import type { DepositRequest } from "@/domain/types";
 import { fmtStamp } from "@/lib/week";
 
-const EXAMPLE = `Bahía Blanca | 15:00-18:00 | 20/08 06:00 | Fresco consolidado
+const EXAMPLE = `EZEIZA-BAHIA-SANTA ROSA-PELLEGRINI | 15:00-18:00 | 20/08 06:00 | Fresco consolidado
 Neuquén | objetivo 21/08 06:00 | Aéreo consolidado
 Trelew`;
+
 
 export function ImportRequestsDialog({
   dayIndex,
