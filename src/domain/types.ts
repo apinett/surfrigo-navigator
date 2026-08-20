@@ -249,8 +249,15 @@ export interface DepositRequest {
   targetUnloadAt: string;
   cargo: string;
   km: number;
+  /** Itinerario completo validado contra el catálogo de tramos. */
+  routeLabel?: string | undefined;
+  /** Paradas canónicas del itinerario (Ezeiza → … → destino final). */
+  routeStops?: string[] | undefined;
+  /** El recorrido figura tal cual en la planilla de complementos. */
+  routeExact?: boolean | undefined;
   notes?: string | undefined;
 }
+
 
 /** Disponibilidad de una unidad para el día en foco. */
 export interface UnitAvailability {
