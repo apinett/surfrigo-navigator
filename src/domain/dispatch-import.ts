@@ -157,10 +157,16 @@ export function parseRequestLine(
       targetUnloadAt: `${targetDate}T${targetTime}:00`,
       cargo: cargo.charAt(0).toUpperCase() + cargo.slice(1),
       km: locationById(destinationId)?.kmFromEzeiza ?? 0,
-      notes: "Importado desde previsto pegado.",
+      routeLabel: itinerary?.label,
+      routeStops: itinerary?.stops,
+      routeExact: itinerary?.exact,
+      notes: itinerary
+        ? `Itinerario validado (${itinerary.legs.length} tramo${itinerary.legs.length === 1 ? "" : "s"}${itinerary.exact ? ", recorrido de planilla" : ", tramos combinados"}).`
+        : "Importado desde previsto pegado.",
     },
   };
 }
+
 
 export function parseRequestsText(
   text: string,
