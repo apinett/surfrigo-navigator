@@ -3,7 +3,14 @@
  * Funciones puras: no dependen de React ni de la UI.
  */
 import { LOCATIONS, locationById } from "./catalog";
+import {
+  itineraryDestination,
+  looksLikeItinerary,
+  validateItinerary,
+  type ItineraryValidation,
+} from "./route-validation";
 import type { DepositRequest } from "./types";
+
 
 /** Ventana de salida por defecto solicitada por la operación. */
 export const DEFAULT_DEPARTURE_WINDOW = { start: "15:00", end: "18:00" };
