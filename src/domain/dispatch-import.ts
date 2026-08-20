@@ -80,10 +80,26 @@ export function parseRequestLine(
   const line = raw.trim();
   if (!line) return { ok: false, raw, error: "Línea vacía" };
 
-  const destinationId = matchDestination(line);
+  const segments = line.split("|").map((s) => s.trim());
+  let itinerary: ItineraryValidation | undefined;
+  let destinationId: string | undefined;
+  let rest = line;
+
+  // Itinerario combinado, ej. "EZEIZA-BAHIA-SANTA ROSA-PELLEGRINI"
+  if (segments[0] && looksLikeItinerary(segments[0])) {
+    itinerary = validateItinerary(segments[0]);
+    if (!itinerary.ok) return { ok: false, raw, error: itinerary.error ?? "Itinerario inválido" };
+    const dest = itineraryDestination(itinerary.stops);
+    if (!dest)
+      return { ok: false, raw, error: "El destino final no corresponde a un nodo del sistema" };
+    destinationId = dest.locationId;
+    rest = segments.slice(1).join(" | ");
+  } else {
+    destinationId = matchDestination(line);
+  }
+
   if (!destinationId) return { ok: false, raw, error: "No se reconoció el destino" };
 
-  let rest = line;
 
   // Ventana de salida: "15:00-18:00" o "15 a 18"
   let start = DEFAULT_DEPARTURE_WINDOW.start;
