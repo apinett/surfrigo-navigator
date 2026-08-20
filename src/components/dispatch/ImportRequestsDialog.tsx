@@ -58,10 +58,12 @@ export function ImportRequestsDialog({
         <DialogHeader>
           <DialogTitle>Cargar salidas del previsto</DialogTitle>
           <DialogDescription>
-            Pegá el previsto de Depósito (una salida por línea). Cada carga toma una sola unidad y,
-            si no indicás horario, la ventana de salida por defecto es{" "}
+            Pegá el previsto de Depósito (una salida por línea). Podés escribir el itinerario
+            combinando tramos del catálogo, ej. EZEIZA-BAHIA-SANTA ROSA-PELLEGRINI. Cada carga toma
+            una sola unidad y, si no indicás horario, la ventana de salida por defecto es{" "}
             {DEFAULT_DEPARTURE_WINDOW.start}–{DEFAULT_DEPARTURE_WINDOW.end}.
           </DialogDescription>
+
         </DialogHeader>
 
         <Textarea
@@ -96,7 +98,14 @@ export function ImportRequestsDialog({
                       objetivo {fmtStamp(row.request.targetUnloadAt)} · {row.request.cargo} · 1
                       unidad
                     </span>
+                    {row.request.routeLabel && (
+                      <span className="mt-0.5 block truncate font-mono text-[10px] text-muted-foreground">
+                        {row.request.routeExact ? "recorrido" : "tramos combinados"}:{" "}
+                        {row.request.routeLabel}
+                      </span>
+                    )}
                   </p>
+
                 ) : (
                   <p className="min-w-0 truncate text-muted-foreground">
                     {row.error}: “{row.raw}”
