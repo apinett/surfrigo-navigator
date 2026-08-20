@@ -62,7 +62,16 @@ export function DestinationCard({
             Ezeiza → {locationName(request.destinationId)}
           </h3>
           <p className="truncate text-[11px] text-muted-foreground">{request.cargo}</p>
+          {request.routeLabel && (
+            <p
+              title={request.routeLabel}
+              className="mt-1 truncate rounded border border-border bg-surface-strong/70 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground"
+            >
+              {request.routeExact ? "Recorrido" : "Tramos"}: {request.routeLabel}
+            </p>
+          )}
         </div>
+
         <span className="flex shrink-0 items-center gap-1">
           <span className="tabular rounded border border-border px-1.5 py-0.5 text-[11px] font-medium">
             {assignments.length}/{request.unitsRequired}

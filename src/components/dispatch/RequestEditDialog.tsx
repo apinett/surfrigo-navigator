@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,9 +20,11 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { LOCATIONS, locationById } from "@/domain/catalog";
+import { itineraryDestination, validateItinerary } from "@/domain/route-validation";
 import type { DepositRequest } from "@/domain/types";
 
 const DESTINATIONS = LOCATIONS.filter((l) => l.kind !== "cd" && l.id !== "taller");
+
 
 export function RequestEditDialog({
   request,
@@ -36,13 +38,39 @@ export function RequestEditDialog({
   onDelete: (requestId: string) => void;
 }) {
   const [draft, setDraft] = useState<DepositRequest | null>(request);
+  const [routeText, setRouteText] = useState(request?.routeLabel ?? "");
 
-  useEffect(() => setDraft(request), [request]);
+  useEffect(() => {
+    setDraft(request);
+    setRouteText(request?.routeLabel ?? "");
+  }, [request]);
+
+  const validation = useMemo(
+    () => (routeText.trim() ? validateItinerary(routeText) : null),
+    [routeText],
+  );
 
   if (!draft) return null;
   const targetDate = draft.targetUnloadAt.slice(0, 10);
   const targetTime = draft.targetUnloadAt.slice(11, 16);
   const set = (patch: Partial<DepositRequest>) => setDraft({ ...draft, ...patch });
+
+  const applyItinerary = () => {
+    if (!validation?.ok) return;
+    const dest = itineraryDestination(validation.stops);
+    set({
+      routeLabel: validation.label,
+      routeStops: validation.stops,
+      routeExact: validation.exact,
+      ...(dest
+        ? {
+            destinationId: dest.locationId,
+            km: locationById(dest.locationId)?.kmFromEzeiza ?? draft.km,
+          }
+        : {}),
+    });
+  };
+
 
   return (
     <Dialog open={!!request} onOpenChange={(o) => !o && onClose()}>

@@ -3,7 +3,14 @@
  * Funciones puras: no dependen de React ni de la UI.
  */
 import { LOCATIONS, locationById } from "./catalog";
+import {
+  itineraryDestination,
+  looksLikeItinerary,
+  validateItinerary,
+  type ItineraryValidation,
+} from "./route-validation";
 import type { DepositRequest } from "./types";
+
 
 /** Ventana de salida por defecto solicitada por la operación. */
 export const DEFAULT_DEPARTURE_WINDOW = { start: "15:00", end: "18:00" };
@@ -73,10 +80,26 @@ export function parseRequestLine(
   const line = raw.trim();
   if (!line) return { ok: false, raw, error: "Línea vacía" };
 
-  const destinationId = matchDestination(line);
+  const segments = line.split("|").map((s) => s.trim());
+  let itinerary: ItineraryValidation | undefined;
+  let destinationId: string | undefined;
+  let rest = line;
+
+  // Itinerario combinado, ej. "EZEIZA-BAHIA-SANTA ROSA-PELLEGRINI"
+  if (segments[0] && looksLikeItinerary(segments[0])) {
+    itinerary = validateItinerary(segments[0]);
+    if (!itinerary.ok) return { ok: false, raw, error: itinerary.error ?? "Itinerario inválido" };
+    const dest = itineraryDestination(itinerary.stops);
+    if (!dest)
+      return { ok: false, raw, error: "El destino final no corresponde a un nodo del sistema" };
+    destinationId = dest.locationId;
+    rest = segments.slice(1).join(" | ");
+  } else {
+    destinationId = matchDestination(line);
+  }
+
   if (!destinationId) return { ok: false, raw, error: "No se reconoció el destino" };
 
-  let rest = line;
 
   // Ventana de salida: "15:00-18:00" o "15 a 18"
   let start = DEFAULT_DEPARTURE_WINDOW.start;
@@ -134,10 +157,16 @@ export function parseRequestLine(
       targetUnloadAt: `${targetDate}T${targetTime}:00`,
       cargo: cargo.charAt(0).toUpperCase() + cargo.slice(1),
       km: locationById(destinationId)?.kmFromEzeiza ?? 0,
-      notes: "Importado desde previsto pegado.",
+      routeLabel: itinerary?.label,
+      routeStops: itinerary?.stops,
+      routeExact: itinerary?.exact,
+      notes: itinerary
+        ? `Itinerario validado (${itinerary.legs.length} tramo${itinerary.legs.length === 1 ? "" : "s"}${itinerary.exact ? ", recorrido de planilla" : ", tramos combinados"}).`
+        : "Importado desde previsto pegado.",
     },
   };
 }
+
 
 export function parseRequestsText(
   text: string,
