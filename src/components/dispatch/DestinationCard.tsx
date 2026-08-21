@@ -72,14 +72,11 @@ export function DestinationCard({
           {request.priority}
         </span>
         <div className="min-w-0">
-          <h3
-            className="truncate text-sm font-semibold tracking-tight"
-            title={routeTitle}
-          >
+          <h3 className="truncate text-sm font-semibold tracking-tight" title={routeTitle}>
             {routeTitle}
           </h3>
           <p className="truncate text-[11px] text-muted-foreground">{request.cargo}</p>
-          {(
+          {
             <div className="mt-1 grid gap-1">
               {validation.ok ? (
                 <p className="flex items-center gap-1 rounded border border-st-disponible/40 bg-st-disponible/10 px-1.5 py-0.5 text-[10px] font-medium text-st-disponible">
@@ -117,7 +114,7 @@ export function DestinationCard({
                 </div>
               )}
             </div>
-          )}
+          }
         </div>
 
         <span className="flex shrink-0 items-center gap-1">
