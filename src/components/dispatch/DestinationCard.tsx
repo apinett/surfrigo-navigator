@@ -1,5 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
-import { AlertTriangle, Clock, Flag, Pencil, Route, Target, X } from "lucide-react";
+import { AlertTriangle, Check, Clock, Flag, Pencil, Plus, Route, Target, X } from "lucide-react";
+import { useMemo } from "react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +13,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { locationName } from "@/domain/catalog";
 import { RISK_META, type PrioritizedRequest } from "@/domain/dispatch";
+import { validateItinerary } from "@/domain/route-validation";
+import { addCustomRoute } from "@/domain/route-store";
 import type { DispatchAssignment, Unit } from "@/domain/types";
+import { useRouteCatalogVersion } from "@/hooks/use-route-catalog";
 import { fmtMargin, fmtStamp } from "@/lib/week";
 
 export function DestinationCard({
@@ -38,6 +43,15 @@ export function DestinationCard({
   otherRequests: PrioritizedRequest[];
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: request.id });
+  const catalogVersion = useRouteCatalogVersion();
+  const routeLabel =
+    request.routeLabel ?? `EZEIZA-${locationName(request.destinationId).toUpperCase()}`;
+  const validation = useMemo(
+    () => validateItinerary(routeLabel),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [routeLabel, catalogVersion],
+  );
+  const routeTitle = validation.ok ? validation.label : routeLabel;
   const emptySlots = Math.max(0, request.unitsRequired - assignments.length);
   const worst = assignments.reduce<"bajo" | "medio" | "alto">(
     (acc, a) => (a.risk === "alto" ? "alto" : a.risk === "medio" && acc !== "alto" ? "medio" : acc),
@@ -58,18 +72,49 @@ export function DestinationCard({
           {request.priority}
         </span>
         <div className="min-w-0">
-          <h3 className="truncate text-sm font-semibold tracking-tight">
-            Ezeiza → {locationName(request.destinationId)}
+          <h3 className="truncate text-sm font-semibold tracking-tight" title={routeTitle}>
+            {routeTitle}
           </h3>
           <p className="truncate text-[11px] text-muted-foreground">{request.cargo}</p>
-          {request.routeLabel && (
-            <p
-              title={request.routeLabel}
-              className="mt-1 truncate rounded border border-border bg-surface-strong/70 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground"
-            >
-              {request.routeExact ? "Recorrido" : "Tramos"}: {request.routeLabel}
-            </p>
-          )}
+          {
+            <div className="mt-1 grid gap-1">
+              {validation.ok ? (
+                <p className="flex items-center gap-1 rounded border border-st-disponible/40 bg-st-disponible/10 px-1.5 py-0.5 text-[10px] font-medium text-st-disponible">
+                  <Check className="size-3 shrink-0" />
+                  Tramo validado ·{" "}
+                  {(request.routeExact ?? validation.exact)
+                    ? "recorrido de planilla"
+                    : `${validation.legs.length} tramo${validation.legs.length === 1 ? "" : "s"} combinados`}
+                </p>
+              ) : (
+                <div className="rounded border border-st-riesgo/40 bg-st-riesgo/10 px-1.5 py-1 text-[10px] text-st-riesgo">
+                  <p className="flex items-start gap-1">
+                    <AlertTriangle className="mt-px size-3 shrink-0" />
+                    <span className="min-w-0">
+                      Tramo no validado: {validation.error ?? "no figura en el catálogo"}
+                    </span>
+                  </p>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="mt-1 h-6 px-2 text-[10px]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (addCustomRoute(routeLabel)) {
+                        toast.success("Tramo agregado al catálogo", { description: routeLabel });
+                      } else {
+                        toast.error("No se pudo agregar el tramo", {
+                          description: "Indicá al menos dos paradas separadas por guiones.",
+                        });
+                      }
+                    }}
+                  >
+                    <Plus className="size-3" /> Agregar tramo al catálogo
+                  </Button>
+                </div>
+              )}
+            </div>
+          }
         </div>
 
         <span className="flex shrink-0 items-center gap-1">

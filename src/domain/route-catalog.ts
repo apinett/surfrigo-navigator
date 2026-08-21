@@ -4521,6 +4521,29 @@ const ROUTE_KEYS: Set<string> = new Set(
   ROUTES.map((r) => splitStops(r).map(normalizeStop).join(">")),
 );
 
+/**
+ * Registra en tiempo de ejecución un recorrido nuevo (y sus tramos elementales),
+ * para que pase a considerarse válido por el validador.
+ */
+export function registerRoute(stops: string[]): boolean {
+  const clean = stops.map((s) => s.trim()).filter(Boolean);
+  if (clean.length < 2) return false;
+  const keys = clean.map(normalizeStop);
+  clean.forEach((name, i) => {
+    const key = keys[i]!;
+    if (key.length > 1 && !STOPS.some((s) => s.key === key)) STOPS.push({ key, name });
+  });
+  for (let i = 0; i < keys.length - 1; i++) {
+    const a = keys[i]!;
+    const b = keys[i + 1]!;
+    if (a === b) continue;
+    LEGS.add(`${a}>${b}`);
+    LEGS.add(`${b}>${a}`);
+  }
+  ROUTE_KEYS.add(keys.join(">"));
+  return true;
+}
+
 export const isKnownRoute = (stops: string[]): boolean =>
   ROUTE_KEYS.has(stops.map(normalizeStop).join(">"));
 
