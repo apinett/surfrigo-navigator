@@ -44,11 +44,14 @@ export function DestinationCard({
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: request.id });
   const catalogVersion = useRouteCatalogVersion();
+  const routeLabel =
+    request.routeLabel ?? `EZEIZA-${locationName(request.destinationId).toUpperCase()}`;
   const validation = useMemo(
-    () => (request.routeLabel ? validateItinerary(request.routeLabel) : null),
+    () => validateItinerary(routeLabel),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [request.routeLabel, catalogVersion],
+    [routeLabel, catalogVersion],
   );
+  const routeTitle = validation.ok ? validation.label : routeLabel;
   const emptySlots = Math.max(0, request.unitsRequired - assignments.length);
   const worst = assignments.reduce<"bajo" | "medio" | "alto">(
     (acc, a) => (a.risk === "alto" ? "alto" : a.risk === "medio" && acc !== "alto" ? "medio" : acc),
@@ -71,14 +74,14 @@ export function DestinationCard({
         <div className="min-w-0">
           <h3
             className="truncate text-sm font-semibold tracking-tight"
-            title={request.routeLabel ?? undefined}
+            title={routeTitle}
           >
-            {request.routeLabel ?? `Ezeiza → ${locationName(request.destinationId)}`}
+            {routeTitle}
           </h3>
           <p className="truncate text-[11px] text-muted-foreground">{request.cargo}</p>
-          {request.routeLabel && (
+          {(
             <div className="mt-1 grid gap-1">
-              {validation?.ok ? (
+              {validation.ok ? (
                 <p className="flex items-center gap-1 rounded border border-st-disponible/40 bg-st-disponible/10 px-1.5 py-0.5 text-[10px] font-medium text-st-disponible">
                   <Check className="size-3 shrink-0" />
                   Tramo validado ·{" "}
@@ -91,7 +94,7 @@ export function DestinationCard({
                   <p className="flex items-start gap-1">
                     <AlertTriangle className="mt-px size-3 shrink-0" />
                     <span className="min-w-0">
-                      Tramo no validado: {validation?.error ?? "no figura en el catálogo"}
+                      Tramo no validado: {validation.error ?? "no figura en el catálogo"}
                     </span>
                   </p>
                   <Button
@@ -100,10 +103,8 @@ export function DestinationCard({
                     className="mt-1 h-6 px-2 text-[10px]"
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (addCustomRoute(request.routeLabel!)) {
-                        toast.success("Tramo agregado al catálogo", {
-                          description: request.routeLabel!,
-                        });
+                      if (addCustomRoute(routeLabel)) {
+                        toast.success("Tramo agregado al catálogo", { description: routeLabel });
                       } else {
                         toast.error("No se pudo agregar el tramo", {
                           description: "Indicá al menos dos paradas separadas por guiones.",
