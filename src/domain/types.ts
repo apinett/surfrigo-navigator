@@ -258,7 +258,6 @@ export interface DepositRequest {
   notes?: string | undefined;
 }
 
-
 /** Disponibilidad de una unidad para el día en foco. */
 export interface UnitAvailability {
   unitId: string;

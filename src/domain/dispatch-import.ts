@@ -11,7 +11,6 @@ import {
 } from "./route-validation";
 import type { DepositRequest } from "./types";
 
-
 /** Ventana de salida por defecto solicitada por la operación. */
 export const DEFAULT_DEPARTURE_WINDOW = { start: "15:00", end: "18:00" };
 
@@ -100,7 +99,6 @@ export function parseRequestLine(
 
   if (!destinationId) return { ok: false, raw, error: "No se reconoció el destino" };
 
-
   // Ventana de salida: "15:00-18:00" o "15 a 18"
   let start = DEFAULT_DEPARTURE_WINDOW.start;
   let end = DEFAULT_DEPARTURE_WINDOW.end;
@@ -166,7 +164,6 @@ export function parseRequestLine(
     },
   };
 }
-
 
 export function parseRequestsText(
   text: string,

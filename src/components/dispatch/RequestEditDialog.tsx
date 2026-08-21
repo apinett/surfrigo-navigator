@@ -25,7 +25,6 @@ import type { DepositRequest } from "@/domain/types";
 
 const DESTINATIONS = LOCATIONS.filter((l) => l.kind !== "cd" && l.id !== "taller");
 
-
 export function RequestEditDialog({
   request,
   onClose,
@@ -70,7 +69,6 @@ export function RequestEditDialog({
         : {}),
     });
   };
-
 
   return (
     <Dialog open={!!request} onOpenChange={(o) => !o && onClose()}>
@@ -139,8 +137,6 @@ export function RequestEditDialog({
               )}
             </div>
           </Field>
-
-
 
           <div className="grid grid-cols-2 gap-3">
             <Field label="Salida desde">
