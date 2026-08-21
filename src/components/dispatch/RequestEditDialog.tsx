@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { LOCATIONS, locationById } from "@/domain/catalog";
+import { addCustomRoute } from "@/domain/route-store";
 import { itineraryDestination, validateItinerary } from "@/domain/route-validation";
 import type { DepositRequest } from "@/domain/types";
 
@@ -44,9 +46,11 @@ export function RequestEditDialog({
     setRouteText(request?.routeLabel ?? "");
   }, [request]);
 
+  const [catalogVersion, setCatalogVersion] = useState(0);
   const validation = useMemo(
     () => (routeText.trim() ? validateItinerary(routeText) : null),
-    [routeText],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [routeText, catalogVersion],
   );
 
   if (!draft) return null;
@@ -120,6 +124,22 @@ export function RequestEditDialog({
                 >
                   Validar
                 </Button>
+                {validation && !validation.ok && (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => {
+                      if (addCustomRoute(routeText)) {
+                        setCatalogVersion((v) => v + 1);
+                        toast.success("Tramo agregado al catálogo", { description: routeText });
+                      } else {
+                        toast.error("Indicá al menos dos paradas separadas por guiones");
+                      }
+                    }}
+                  >
+                    Agregar tramo
+                  </Button>
+                )}
               </div>
               {validation && (
                 <p
