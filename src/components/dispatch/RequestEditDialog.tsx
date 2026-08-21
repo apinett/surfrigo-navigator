@@ -104,6 +104,44 @@ export function RequestEditDialog({
             </Select>
           </Field>
 
+          <Field label="Itinerario (tramos)">
+            <div className="grid gap-1.5">
+              <div className="flex gap-2">
+                <Input
+                  value={routeText}
+                  onChange={(e) => setRouteText(e.target.value)}
+                  placeholder="EZEIZA-BAHIA-SANTA ROSA-PELLEGRINI"
+                  className="h-9 font-mono text-xs uppercase"
+                  aria-label="Itinerario"
+                />
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={applyItinerary}
+                  disabled={!validation?.ok}
+                >
+                  Validar
+                </Button>
+              </div>
+              {validation && (
+                <p
+                  className={`text-[10.5px] ${validation.ok ? "text-st-disponible" : "text-st-riesgo"}`}
+                >
+                  {validation.ok
+                    ? `${validation.legs.length} tramo${validation.legs.length === 1 ? "" : "s"} válido${validation.legs.length === 1 ? "" : "s"} · ${validation.exact ? "recorrido de planilla" : "combinación de tramos"}`
+                    : validation.error}
+                  {!validation.ok && validation.suggestions.length > 0 && (
+                    <span className="block text-muted-foreground">
+                      Continuaciones posibles: {validation.suggestions.join(", ")}
+                    </span>
+                  )}
+                </p>
+              )}
+            </div>
+          </Field>
+
+
+
           <div className="grid grid-cols-2 gap-3">
             <Field label="Salida desde">
               <Input
