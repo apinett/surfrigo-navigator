@@ -21,7 +21,6 @@ const EXAMPLE = `EZEIZA-BAHIA-SANTA ROSA-PELLEGRINI | 15:00-18:00 | 20/08 06:00 
 Neuquén | objetivo 21/08 06:00 | Aéreo consolidado
 Trelew`;
 
-
 export function ImportRequestsDialog({
   dayIndex,
   dateIso,
@@ -63,7 +62,6 @@ export function ImportRequestsDialog({
             una sola unidad y, si no indicás horario, la ventana de salida por defecto es{" "}
             {DEFAULT_DEPARTURE_WINDOW.start}–{DEFAULT_DEPARTURE_WINDOW.end}.
           </DialogDescription>
-
         </DialogHeader>
 
         <Textarea
@@ -105,7 +103,6 @@ export function ImportRequestsDialog({
                       </span>
                     )}
                   </p>
-
                 ) : (
                   <p className="min-w-0 truncate text-muted-foreground">
                     {row.error}: “{row.raw}”

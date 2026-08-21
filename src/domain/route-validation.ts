@@ -69,7 +69,9 @@ export function validateItinerary(text: string): ItineraryValidation {
 
   const brokenAt = legs.findIndex((l) => !l.known);
   const suggestions =
-    brokenAt >= 0 ? nextStops(legs[brokenAt]!.from).slice(0, 8) : nextStops(stops.at(-1) ?? "").slice(0, 8);
+    brokenAt >= 0
+      ? nextStops(legs[brokenAt]!.from).slice(0, 8)
+      : nextStops(stops.at(-1) ?? "").slice(0, 8);
 
   const ok = stops.length >= 2 && unknownStops.length === 0 && brokenAt < 0;
   const error = !ok
@@ -97,14 +99,22 @@ export function stopToLocationId(stop: string): string | undefined {
   const key = normalizeStop(stop);
   const nodes = LOCATIONS.filter((l) => l.id !== "taller").map((l) => ({
     id: l.id,
-    keys: [normalizeStop(l.name), normalizeStop(l.id), normalizeStop(l.name.replace(/^CD |^Puerto /i, ""))],
+    keys: [
+      normalizeStop(l.name),
+      normalizeStop(l.id),
+      normalizeStop(l.name.replace(/^CD |^Puerto /i, "")),
+    ],
   }));
-  return nodes.find((n) => n.keys.some((k) => k === key))?.id
-    ?? nodes.find((n) => n.keys.some((k) => k.length > 2 && (k.includes(key) || key.includes(k))))?.id;
+  return (
+    nodes.find((n) => n.keys.some((k) => k === key))?.id ??
+    nodes.find((n) => n.keys.some((k) => k.length > 2 && (k.includes(key) || key.includes(k))))?.id
+  );
 }
 
 /** Última parada del itinerario que corresponde a un nodo del sistema. */
-export function itineraryDestination(stops: string[]): { stop: string; locationId: string } | undefined {
+export function itineraryDestination(
+  stops: string[],
+): { stop: string; locationId: string } | undefined {
   for (let i = stops.length - 1; i >= 0; i--) {
     const locationId = stopToLocationId(stops[i]!);
     if (locationId && locationId !== "ezeiza") return { stop: stops[i]!, locationId };
