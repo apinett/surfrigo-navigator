@@ -82,7 +82,7 @@ export function DestinationCard({
                 <p className="flex items-center gap-1 rounded border border-st-disponible/40 bg-st-disponible/10 px-1.5 py-0.5 text-[10px] font-medium text-st-disponible">
                   <Check className="size-3 shrink-0" />
                   Tramo validado ·{" "}
-                  {request.routeExact ?? validation.exact
+                  {(request.routeExact ?? validation.exact)
                     ? "recorrido de planilla"
                     : `${validation.legs.length} tramo${validation.legs.length === 1 ? "" : "s"} combinados`}
                 </p>
@@ -118,7 +118,6 @@ export function DestinationCard({
             </div>
           )}
         </div>
-
 
         <span className="flex shrink-0 items-center gap-1">
           <span className="tabular rounded border border-border px-1.5 py-0.5 text-[11px] font-medium">

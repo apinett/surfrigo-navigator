@@ -4550,7 +4550,6 @@ export const isKnownRoute = (stops: string[]): boolean =>
 export const isKnownLeg = (from: string, to: string): boolean =>
   LEGS.has(`${normalizeStop(from)}>${normalizeStop(to)}`);
 
-
 /** Resuelve una parada escrita libremente al nombre canónico del catálogo. */
 export function resolveStop(input: string): string | undefined {
   const key = normalizeStop(input);

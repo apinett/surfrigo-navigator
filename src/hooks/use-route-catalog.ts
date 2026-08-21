@@ -11,9 +11,5 @@ export function useRouteCatalogVersion(): number {
   useEffect(() => {
     hydrateCustomRoutes();
   }, []);
-  return useSyncExternalStore(
-    subscribeRouteCatalog,
-    routeCatalogVersion,
-    () => 0,
-  );
+  return useSyncExternalStore(subscribeRouteCatalog, routeCatalogVersion, () => 0);
 }
