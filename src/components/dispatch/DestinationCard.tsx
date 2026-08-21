@@ -58,19 +58,56 @@ export function DestinationCard({
           {request.priority}
         </span>
         <div className="min-w-0">
-          <h3 className="truncate text-sm font-semibold tracking-tight">
-            Ezeiza → {locationName(request.destinationId)}
+          <h3
+            className="truncate text-sm font-semibold tracking-tight"
+            title={request.routeLabel ?? undefined}
+          >
+            {request.routeLabel ?? `Ezeiza → ${locationName(request.destinationId)}`}
           </h3>
           <p className="truncate text-[11px] text-muted-foreground">{request.cargo}</p>
           {request.routeLabel && (
-            <p
-              title={request.routeLabel}
-              className="mt-1 truncate rounded border border-border bg-surface-strong/70 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground"
-            >
-              {request.routeExact ? "Recorrido" : "Tramos"}: {request.routeLabel}
-            </p>
+            <div className="mt-1 grid gap-1">
+              {validation?.ok ? (
+                <p className="flex items-center gap-1 rounded border border-st-disponible/40 bg-st-disponible/10 px-1.5 py-0.5 text-[10px] font-medium text-st-disponible">
+                  <Check className="size-3 shrink-0" />
+                  Tramo validado ·{" "}
+                  {request.routeExact ?? validation.exact
+                    ? "recorrido de planilla"
+                    : `${validation.legs.length} tramo${validation.legs.length === 1 ? "" : "s"} combinados`}
+                </p>
+              ) : (
+                <div className="rounded border border-st-riesgo/40 bg-st-riesgo/10 px-1.5 py-1 text-[10px] text-st-riesgo">
+                  <p className="flex items-start gap-1">
+                    <AlertTriangle className="mt-px size-3 shrink-0" />
+                    <span className="min-w-0">
+                      Tramo no validado: {validation?.error ?? "no figura en el catálogo"}
+                    </span>
+                  </p>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="mt-1 h-6 px-2 text-[10px]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (addCustomRoute(request.routeLabel!)) {
+                        toast.success("Tramo agregado al catálogo", {
+                          description: request.routeLabel!,
+                        });
+                      } else {
+                        toast.error("No se pudo agregar el tramo", {
+                          description: "Indicá al menos dos paradas separadas por guiones.",
+                        });
+                      }
+                    }}
+                  >
+                    <Plus className="size-3" /> Agregar tramo al catálogo
+                  </Button>
+                </div>
+              )}
+            </div>
           )}
         </div>
+
 
         <span className="flex shrink-0 items-center gap-1">
           <span className="tabular rounded border border-border px-1.5 py-0.5 text-[11px] font-medium">
