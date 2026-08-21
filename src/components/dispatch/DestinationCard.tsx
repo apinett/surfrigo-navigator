@@ -1,5 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
-import { AlertTriangle, Clock, Flag, Pencil, Route, Target, X } from "lucide-react";
+import { AlertTriangle, Check, Clock, Flag, Pencil, Plus, Route, Target, X } from "lucide-react";
+import { useMemo } from "react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +13,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { locationName } from "@/domain/catalog";
 import { RISK_META, type PrioritizedRequest } from "@/domain/dispatch";
+import { validateItinerary } from "@/domain/route-validation";
+import { addCustomRoute } from "@/domain/route-store";
 import type { DispatchAssignment, Unit } from "@/domain/types";
+import { useRouteCatalogVersion } from "@/hooks/use-route-catalog";
 import { fmtMargin, fmtStamp } from "@/lib/week";
 
 export function DestinationCard({
@@ -38,6 +43,12 @@ export function DestinationCard({
   otherRequests: PrioritizedRequest[];
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: request.id });
+  const catalogVersion = useRouteCatalogVersion();
+  const validation = useMemo(
+    () => (request.routeLabel ? validateItinerary(request.routeLabel) : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [request.routeLabel, catalogVersion],
+  );
   const emptySlots = Math.max(0, request.unitsRequired - assignments.length);
   const worst = assignments.reduce<"bajo" | "medio" | "alto">(
     (acc, a) => (a.risk === "alto" ? "alto" : a.risk === "medio" && acc !== "alto" ? "medio" : acc),
