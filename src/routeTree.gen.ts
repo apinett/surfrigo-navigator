@@ -9,95 +9,105 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ChileRouteImport } from './routes/chile'
-import { Route as CombustibleRouteImport } from './routes/combustible'
-import { Route as ComunicacionesRouteImport } from './routes/comunicaciones'
-import { Route as ConfiguracionRouteImport } from './routes/configuracion'
-import { Route as FlotaRouteImport } from './routes/flota'
-import { Route as FronterasRouteImport } from './routes/fronteras'
-import { Route as PlanificacionRouteImport } from './routes/planificacion'
-import { Route as ReportesRouteImport } from './routes/reportes'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedChileRouteImport } from './routes/_authenticated/chile'
+import { Route as AuthenticatedCombustibleRouteImport } from './routes/_authenticated/combustible'
+import { Route as AuthenticatedComunicacionesRouteImport } from './routes/_authenticated/comunicaciones'
+import { Route as AuthenticatedConfiguracionRouteImport } from './routes/_authenticated/configuracion'
+import { Route as AuthenticatedFlotaRouteImport } from './routes/_authenticated/flota'
+import { Route as AuthenticatedFronterasRouteImport } from './routes/_authenticated/fronteras'
+import { Route as AuthenticatedPlanificacionRouteImport } from './routes/_authenticated/planificacion'
+import { Route as AuthenticatedReportesRouteImport } from './routes/_authenticated/reportes'
 
-const IndexRoute = IndexRouteImport.update({
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ChileRoute = ChileRouteImport.update({
+const AuthenticatedChileRoute = AuthenticatedChileRouteImport.update({
   id: '/chile',
   path: '/chile',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const CombustibleRoute = CombustibleRouteImport.update({
-  id: '/combustible',
-  path: '/combustible',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComunicacionesRoute = ComunicacionesRouteImport.update({
-  id: '/comunicaciones',
-  path: '/comunicaciones',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConfiguracionRoute = ConfiguracionRouteImport.update({
-  id: '/configuracion',
-  path: '/configuracion',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FlotaRoute = FlotaRouteImport.update({
+const AuthenticatedCombustibleRoute =
+  AuthenticatedCombustibleRouteImport.update({
+    id: '/combustible',
+    path: '/combustible',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedComunicacionesRoute =
+  AuthenticatedComunicacionesRouteImport.update({
+    id: '/comunicaciones',
+    path: '/comunicaciones',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedConfiguracionRoute =
+  AuthenticatedConfiguracionRouteImport.update({
+    id: '/configuracion',
+    path: '/configuracion',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedFlotaRoute = AuthenticatedFlotaRouteImport.update({
   id: '/flota',
   path: '/flota',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const FronterasRoute = FronterasRouteImport.update({
+const AuthenticatedFronterasRoute = AuthenticatedFronterasRouteImport.update({
   id: '/fronteras',
   path: '/fronteras',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const PlanificacionRoute = PlanificacionRouteImport.update({
-  id: '/planificacion',
-  path: '/planificacion',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportesRoute = ReportesRouteImport.update({
+const AuthenticatedPlanificacionRoute =
+  AuthenticatedPlanificacionRouteImport.update({
+    id: '/planificacion',
+    path: '/planificacion',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportesRoute = AuthenticatedReportesRouteImport.update({
   id: '/reportes',
   path: '/reportes',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/chile': typeof ChileRoute
-  '/combustible': typeof CombustibleRoute
-  '/comunicaciones': typeof ComunicacionesRoute
-  '/configuracion': typeof ConfiguracionRoute
-  '/flota': typeof FlotaRoute
-  '/fronteras': typeof FronterasRoute
-  '/planificacion': typeof PlanificacionRoute
-  '/reportes': typeof ReportesRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/chile': typeof AuthenticatedChileRoute
+  '/combustible': typeof AuthenticatedCombustibleRoute
+  '/comunicaciones': typeof AuthenticatedComunicacionesRoute
+  '/configuracion': typeof AuthenticatedConfiguracionRoute
+  '/flota': typeof AuthenticatedFlotaRoute
+  '/fronteras': typeof AuthenticatedFronterasRoute
+  '/planificacion': typeof AuthenticatedPlanificacionRoute
+  '/reportes': typeof AuthenticatedReportesRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/chile': typeof ChileRoute
-  '/combustible': typeof CombustibleRoute
-  '/comunicaciones': typeof ComunicacionesRoute
-  '/configuracion': typeof ConfiguracionRoute
-  '/flota': typeof FlotaRoute
-  '/fronteras': typeof FronterasRoute
-  '/planificacion': typeof PlanificacionRoute
-  '/reportes': typeof ReportesRoute
+  '/chile': typeof AuthenticatedChileRoute
+  '/combustible': typeof AuthenticatedCombustibleRoute
+  '/comunicaciones': typeof AuthenticatedComunicacionesRoute
+  '/configuracion': typeof AuthenticatedConfiguracionRoute
+  '/flota': typeof AuthenticatedFlotaRoute
+  '/fronteras': typeof AuthenticatedFronterasRoute
+  '/planificacion': typeof AuthenticatedPlanificacionRoute
+  '/reportes': typeof AuthenticatedReportesRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/chile': typeof ChileRoute
-  '/combustible': typeof CombustibleRoute
-  '/comunicaciones': typeof ComunicacionesRoute
-  '/configuracion': typeof ConfiguracionRoute
-  '/flota': typeof FlotaRoute
-  '/fronteras': typeof FronterasRoute
-  '/planificacion': typeof PlanificacionRoute
-  '/reportes': typeof ReportesRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_authenticated/chile': typeof AuthenticatedChileRoute
+  '/_authenticated/combustible': typeof AuthenticatedCombustibleRoute
+  '/_authenticated/comunicaciones': typeof AuthenticatedComunicacionesRoute
+  '/_authenticated/configuracion': typeof AuthenticatedConfiguracionRoute
+  '/_authenticated/flota': typeof AuthenticatedFlotaRoute
+  '/_authenticated/fronteras': typeof AuthenticatedFronterasRoute
+  '/_authenticated/planificacion': typeof AuthenticatedPlanificacionRoute
+  '/_authenticated/reportes': typeof AuthenticatedReportesRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -113,7 +123,6 @@ export interface FileRouteTypes {
     | '/reportes'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/chile'
     | '/combustible'
     | '/comunicaciones'
@@ -122,109 +131,129 @@ export interface FileRouteTypes {
     | '/fronteras'
     | '/planificacion'
     | '/reportes'
+    | '/'
   id:
     | '__root__'
-    | '/'
-    | '/chile'
-    | '/combustible'
-    | '/comunicaciones'
-    | '/configuracion'
-    | '/flota'
-    | '/fronteras'
-    | '/planificacion'
-    | '/reportes'
+    | '/_authenticated'
+    | '/_authenticated/chile'
+    | '/_authenticated/combustible'
+    | '/_authenticated/comunicaciones'
+    | '/_authenticated/configuracion'
+    | '/_authenticated/flota'
+    | '/_authenticated/fronteras'
+    | '/_authenticated/planificacion'
+    | '/_authenticated/reportes'
+    | '/_authenticated/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ChileRoute: typeof ChileRoute
-  CombustibleRoute: typeof CombustibleRoute
-  ComunicacionesRoute: typeof ComunicacionesRoute
-  ConfiguracionRoute: typeof ConfiguracionRoute
-  FlotaRoute: typeof FlotaRoute
-  FronterasRoute: typeof FronterasRoute
-  PlanificacionRoute: typeof PlanificacionRoute
-  ReportesRoute: typeof ReportesRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/chile': {
-      id: '/chile'
+    '/_authenticated/chile': {
+      id: '/_authenticated/chile'
       path: '/chile'
       fullPath: '/chile'
-      preLoaderRoute: typeof ChileRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedChileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/combustible': {
-      id: '/combustible'
+    '/_authenticated/combustible': {
+      id: '/_authenticated/combustible'
       path: '/combustible'
       fullPath: '/combustible'
-      preLoaderRoute: typeof CombustibleRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedCombustibleRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/comunicaciones': {
-      id: '/comunicaciones'
+    '/_authenticated/comunicaciones': {
+      id: '/_authenticated/comunicaciones'
       path: '/comunicaciones'
       fullPath: '/comunicaciones'
-      preLoaderRoute: typeof ComunicacionesRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedComunicacionesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/configuracion': {
-      id: '/configuracion'
+    '/_authenticated/configuracion': {
+      id: '/_authenticated/configuracion'
       path: '/configuracion'
       fullPath: '/configuracion'
-      preLoaderRoute: typeof ConfiguracionRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedConfiguracionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/flota': {
-      id: '/flota'
+    '/_authenticated/flota': {
+      id: '/_authenticated/flota'
       path: '/flota'
       fullPath: '/flota'
-      preLoaderRoute: typeof FlotaRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedFlotaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/fronteras': {
-      id: '/fronteras'
+    '/_authenticated/fronteras': {
+      id: '/_authenticated/fronteras'
       path: '/fronteras'
       fullPath: '/fronteras'
-      preLoaderRoute: typeof FronterasRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedFronterasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/planificacion': {
-      id: '/planificacion'
+    '/_authenticated/planificacion': {
+      id: '/_authenticated/planificacion'
       path: '/planificacion'
       fullPath: '/planificacion'
-      preLoaderRoute: typeof PlanificacionRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedPlanificacionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/reportes': {
-      id: '/reportes'
+    '/_authenticated/reportes': {
+      id: '/_authenticated/reportes'
       path: '/reportes'
       fullPath: '/reportes'
-      preLoaderRoute: typeof ReportesRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedReportesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedChileRoute: typeof AuthenticatedChileRoute
+  AuthenticatedCombustibleRoute: typeof AuthenticatedCombustibleRoute
+  AuthenticatedComunicacionesRoute: typeof AuthenticatedComunicacionesRoute
+  AuthenticatedConfiguracionRoute: typeof AuthenticatedConfiguracionRoute
+  AuthenticatedFlotaRoute: typeof AuthenticatedFlotaRoute
+  AuthenticatedFronterasRoute: typeof AuthenticatedFronterasRoute
+  AuthenticatedPlanificacionRoute: typeof AuthenticatedPlanificacionRoute
+  AuthenticatedReportesRoute: typeof AuthenticatedReportesRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedChileRoute: AuthenticatedChileRoute,
+  AuthenticatedCombustibleRoute: AuthenticatedCombustibleRoute,
+  AuthenticatedComunicacionesRoute: AuthenticatedComunicacionesRoute,
+  AuthenticatedConfiguracionRoute: AuthenticatedConfiguracionRoute,
+  AuthenticatedFlotaRoute: AuthenticatedFlotaRoute,
+  AuthenticatedFronterasRoute: AuthenticatedFronterasRoute,
+  AuthenticatedPlanificacionRoute: AuthenticatedPlanificacionRoute,
+  AuthenticatedReportesRoute: AuthenticatedReportesRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ChileRoute: ChileRoute,
-  CombustibleRoute: CombustibleRoute,
-  ComunicacionesRoute: ComunicacionesRoute,
-  ConfiguracionRoute: ConfiguracionRoute,
-  FlotaRoute: FlotaRoute,
-  FronterasRoute: FronterasRoute,
-  PlanificacionRoute: PlanificacionRoute,
-  ReportesRoute: ReportesRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
