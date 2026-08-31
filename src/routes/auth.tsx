@@ -133,7 +133,7 @@ function AuthPage() {
   }
 
   return (
-    <div className="grid min-h-screen bg-background text-foreground lg:grid-cols-[1.1fr_1fr]">
+    <div className="grid min-h-screen auto-rows-fr bg-background text-foreground lg:grid-cols-[1.1fr_1fr]">
       <section className="hidden flex-col justify-between border-r border-border bg-sidebar p-10 lg:flex">
         <div className="flex items-center gap-2.5">
           <span className="grid size-9 place-items-center rounded-md bg-primary font-mono text-sm font-bold text-primary-foreground">
