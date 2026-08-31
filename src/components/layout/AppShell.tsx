@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { SessionBar } from "@/components/layout/SessionBar";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
@@ -73,6 +74,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </aside>
 
           <div className="flex min-w-0 flex-1 flex-col">
+            <SessionBar />
             <MobileNav />
             <main className="min-w-0 flex-1">{children}</main>
           </div>

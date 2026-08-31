@@ -37,7 +37,7 @@ import { DISPATCH_CONFIG, evaluateAssignment, prioritizeRequests } from "@/domai
 import type { DepositRequest, DispatchAssignment, UnitAvailability } from "@/domain/types";
 import { SIMULATED_TODAY_INDEX, fmtMargin, fmtStamp, weekStartForOffset } from "@/lib/week";
 
-export const Route = createFileRoute("/planificacion")({
+export const Route = createFileRoute("/_authenticated/planificacion")({
   head: () => ({
     meta: [
       { title: "Planificación diaria | Surfrigo Control Tower" },

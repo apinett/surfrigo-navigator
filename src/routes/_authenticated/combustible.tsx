@@ -5,7 +5,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Placeholder } from "@/components/layout/Placeholder";
 
-export const Route = createFileRoute("/combustible")({
+export const Route = createFileRoute("/_authenticated/combustible")({
   head: () => ({
     meta: [
       { title: "Combustible y rendimiento | Surfrigo Control Tower" },

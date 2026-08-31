@@ -8,7 +8,7 @@ import { buildWeeklyPlan } from "@/domain/demo";
 import { fmtStamp } from "@/lib/week";
 import { Progress } from "@/components/ui/progress";
 
-export const Route = createFileRoute("/fronteras")({
+export const Route = createFileRoute("/_authenticated/fronteras")({
   head: () => ({
     meta: [
       { title: "Fronteras y ETA | Surfrigo Control Tower" },

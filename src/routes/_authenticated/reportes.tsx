@@ -5,7 +5,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Placeholder } from "@/components/layout/Placeholder";
 
-export const Route = createFileRoute("/reportes")({
+export const Route = createFileRoute("/_authenticated/reportes")({
   head: () => ({
     meta: [
       { title: "Reportes y KPIs | Surfrigo Control Tower" },

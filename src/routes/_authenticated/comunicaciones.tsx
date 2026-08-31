@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { CommsCenter } from "@/components/tower/CommsCenter";
 import { buildWeeklyPlan } from "@/domain/demo";
 
-export const Route = createFileRoute("/comunicaciones")({
+export const Route = createFileRoute("/_authenticated/comunicaciones")({
   head: () => ({
     meta: [
       { title: "Comunicaciones | Surfrigo Control Tower" },
