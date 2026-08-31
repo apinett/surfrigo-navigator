@@ -181,13 +181,7 @@ export const useSaveTrailer = () =>
 /** Baja lógica: nunca borrar historial operativo. */
 export const useDeactivate = () =>
   useFleetMutation(
-    async ({
-      table,
-      id,
-    }: {
-      table: "units" | "drivers" | "tractors" | "trailers";
-      id: string;
-    }) => {
+    async ({ table, id }: { table: "units" | "drivers" | "tractors" | "trailers"; id: string }) => {
       const { error } = await supabase.from(table).update({ is_active: false }).eq("id", id);
       if (error) throw error;
     },

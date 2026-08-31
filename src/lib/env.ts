@@ -13,22 +13,22 @@ let lastError: string | undefined;
 
 function read(): BrowserEnv | undefined {
   if (cached) return cached;
-  const url = import.meta.env['VITE_SUPABASE_URL'] as string | undefined;
-  const key = (import.meta.env['VITE_SUPABASE_PUBLISHABLE_KEY'] ??
-    import.meta.env['VITE_SUPABASE_ANON_KEY']) as string | undefined;
+  const url = import.meta.env["VITE_SUPABASE_URL"] as string | undefined;
+  const key = (import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ??
+    import.meta.env["VITE_SUPABASE_ANON_KEY"]) as string | undefined;
 
   const missing: string[] = [];
-  if (!url) missing.push('VITE_SUPABASE_URL');
-  if (!key) missing.push('VITE_SUPABASE_PUBLISHABLE_KEY');
+  if (!url) missing.push("VITE_SUPABASE_URL");
+  if (!key) missing.push("VITE_SUPABASE_PUBLISHABLE_KEY");
   if (missing.length) {
-    lastError = `Faltan variables de entorno: ${missing.join(', ')}`;
+    lastError = `Faltan variables de entorno: ${missing.join(", ")}`;
     return undefined;
   }
 
   cached = {
     supabaseUrl: url!,
     supabasePublishableKey: key!,
-    projectId: import.meta.env['VITE_SUPABASE_PROJECT_ID'] as string | undefined,
+    projectId: import.meta.env["VITE_SUPABASE_PROJECT_ID"] as string | undefined,
   };
   return cached;
 }

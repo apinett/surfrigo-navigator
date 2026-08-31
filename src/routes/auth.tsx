@@ -95,8 +95,7 @@ function AuthPage() {
       return;
     }
     toast.success("Cuenta creada", {
-      description:
-        "Un administrador debe asignarte un rol antes de que puedas operar el sistema.",
+      description: "Un administrador debe asignarte un rol antes de que puedas operar el sistema.",
     });
   }
 
@@ -262,8 +261,8 @@ function AuthPage() {
                   Crear cuenta
                 </Button>
                 <p className="text-[11px] leading-relaxed text-muted-foreground">
-                  La cuenta queda sin permisos hasta que un administrador asigne un rol
-                  (analista, seguimiento, taller o consulta).
+                  La cuenta queda sin permisos hasta que un administrador asigne un rol (analista,
+                  seguimiento, taller o consulta).
                 </p>
               </form>
             </TabsContent>

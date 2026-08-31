@@ -29,7 +29,7 @@ export async function fetchSettings(): Promise<AppSettings> {
   const { data, error } = await supabase.from("app_settings").select("key, value");
   if (error) throw error;
   const map = new Map((data ?? []).map((row) => [row.key, row.value]));
-  const pick = <T,>(key: string, fallback: T) => (map.get(key) as T | undefined) ?? fallback;
+  const pick = <T>(key: string, fallback: T) => (map.get(key) as T | undefined) ?? fallback;
   return {
     dispatchConfig: pick("dispatch_config", DEFAULT_SETTINGS.dispatchConfig),
     scoreWeights: pick("score_weights", DEFAULT_SETTINGS.scoreWeights),
