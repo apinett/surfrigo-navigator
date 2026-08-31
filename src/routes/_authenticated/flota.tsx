@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { locationName } from "@/domain/catalog";
 import { buildWeeklyPlan, driverById } from "@/domain/demo";
 
-export const Route = createFileRoute("/flota")({
+export const Route = createFileRoute("/_authenticated/flota")({
   head: () => ({
     meta: [
       { title: "Unidades y choferes | Surfrigo Control Tower" },

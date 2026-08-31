@@ -5,7 +5,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { BORDERS, AR_BASES } from "@/domain/catalog";
 
-export const Route = createFileRoute("/configuracion")({
+export const Route = createFileRoute("/_authenticated/configuracion")({
   head: () => ({
     meta: [
       { title: "Configuración | Surfrigo Control Tower" },

@@ -20,7 +20,7 @@ import { AR_BASES, CL_PORTS, STATUS_META, STATUS_ORDER } from "@/domain/catalog"
 import { DRIVERS, buildWeeklyPlan, driverById } from "@/domain/demo";
 import { SIMULATED_TODAY_INDEX, addDays, fmtDayLong } from "@/lib/week";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authenticated/")({
   head: () => ({
     meta: [
       { title: "Torre de Control Semanal | Surfrigo Control Tower" },

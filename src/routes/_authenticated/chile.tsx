@@ -9,7 +9,7 @@ import { buildWeeklyPlan, driverById } from "@/domain/demo";
 import { fmtStamp, weekDates, fmtDay } from "@/lib/week";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/chile")({
+export const Route = createFileRoute("/_authenticated/chile")({
   head: () => ({
     meta: [
       { title: "Movimientos Chile | Surfrigo Control Tower" },
