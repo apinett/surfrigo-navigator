@@ -111,13 +111,13 @@ export const maintenanceOrdersQueryOptions = () =>
 
 function useFleetMutation<TInput, TResult>(
   fn: (input: TInput) => Promise<TResult>,
-  keys: readonly unknown[][],
+  keys: readonly (readonly unknown[])[],
 ) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: fn,
     onSuccess: () => {
-      keys.forEach((key) => void queryClient.invalidateQueries({ queryKey: key }));
+      keys.forEach((key) => void queryClient.invalidateQueries({ queryKey: [...key] }));
     },
   });
 }
@@ -206,7 +206,7 @@ export const useSetUnitStatus = () =>
     }) => {
       const { error } = await supabase
         .from("units")
-        .update({ status: input.newStatus, current_location_id: input.locationId ?? undefined })
+        .update({ status: input.newStatus, current_location_id: input.locationId ?? null })
         .eq("id", input.unitId);
       if (error) throw error;
       const { error: eventError } = await supabase.from("unit_status_events").insert({
