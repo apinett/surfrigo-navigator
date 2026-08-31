@@ -73,6 +73,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </aside>
 
           <div className="flex min-w-0 flex-1 flex-col">
+            <SessionBar />
             <MobileNav />
             <main className="min-w-0 flex-1">{children}</main>
           </div>
