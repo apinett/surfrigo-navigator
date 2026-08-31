@@ -1,0 +1,22 @@
+/** Claves de caché de TanStack Query, en un único lugar para invalidar sin adivinar. */
+export const qk = {
+  settings: ["settings"] as const,
+  locations: ["locations"] as const,
+  routes: ["routes"] as const,
+  borderCrossings: ["border-crossings"] as const,
+  tractors: ["tractors"] as const,
+  trailers: ["trailers"] as const,
+  drivers: ["drivers"] as const,
+  units: ["units"] as const,
+  unit: (id: string) => ["units", id] as const,
+  maintenance: ["maintenance-orders"] as const,
+  plan: (weekStart: string) => ["weekly-plan", weekStart] as const,
+  requests: (planId: string) => ["deposit-requests", planId] as const,
+  assignments: (planId: string) => ["dispatch-assignments", planId] as const,
+  trips: (filters?: string) => ["trips", filters ?? "all"] as const,
+  tripEvents: (tripId: string) => ["trip-events", tripId] as const,
+  alerts: ["alerts"] as const,
+  drafts: ["communication-drafts"] as const,
+  audit: (table?: string) => ["audit-log", table ?? "all"] as const,
+  providers: ["tracking-providers"] as const,
+} as const;
